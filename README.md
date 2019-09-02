@@ -7,6 +7,7 @@ Proyecto de cursada de la materia Sistemas Operativos Avanzados.
 
 ## Alumnos: 
           * Castillo, Tomás Eugenio; DNI 39769558
+          * Fernandez, Julian Gonzalo; DNI 38457070
 
 ## Nombre del grupo: M1
 
