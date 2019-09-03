@@ -6,9 +6,11 @@ Proyecto de cursada de la materia Sistemas Operativos Avanzados.
 ## Materia: Sistemas Operativos Avanzados
 
 ## Alumnos: 
+          * Brude, Alejandro; DNI 33908097
           * Castillo, Tomás Eugenio; DNI 39769558
           * Fernandez, Julian Gonzalo; DNI 38457070
           * Fernandez, Nicolas; DNI 38168581
+          * Orlando, Javier; DNI 34850430
 
 ## Nombre del grupo: M1
 
@@ -72,6 +74,15 @@ El usuario podrá configurar horarios de comida con la app, así el alimentador 
 ```
 
 # Descripción Técnica de todo el sistema:
+## Actuadores: 
+* Servo sg90. Expide la comida del alimentador hacia el plato.
+* Display LED . Muestra los estados del alimentador. 
+
+
+## Sensores
+* Sensor de peso o balanza. Detecta la carga de comida dentro del plato de la mascota. 
+* Sensor RTC. Permite programar los eventos para la descarga de comida y alertas acerca del comportamiento de la mascota.
+* Sensor de proximidad. Detecta la presencia de la mascota cuando la misma se encuentra a X cm de distancia (o cercana) del plato de comida.
 ```
 
 ```
