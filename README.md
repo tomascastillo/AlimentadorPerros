@@ -23,9 +23,9 @@ Este proyecto consta de un alimentador automático de perros, linkeado con una a
 
 
 ## ¿Qué es el proyecto?
-```
+
 Este proyecto consta de un alimentador automático de perros
-```
+
 
 ## ¿Qué hace? 
 
