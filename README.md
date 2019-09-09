@@ -23,9 +23,9 @@ Este proyecto consta de un alimentador automático de perros, linkeado con una a
 
 
 ## ¿Qué es el proyecto?
-```
+
 Este proyecto consta de un alimentador automático de perros
-```
+
 
 ## ¿Qué hace? 
 
@@ -71,12 +71,13 @@ El usuario podrá configurar horarios de comida con la app, así el alimentador 
 ## Actuadores: 
 * Servo sg90. Expide la comida del alimentador hacia el plato.
 * Display LED . Muestra los estados del alimentador. 
-
+* Luces LED 
 
 ## Sensores
 * Sensor de peso o balanza. Detecta la carga de comida dentro del plato de la mascota. 
-* Sensor RTC. Permite programar los eventos para la descarga de comida y alertas acerca del comportamiento de la mascota.
+* Reloj RTC. Permite programar los eventos para la descarga de comida y alertas acerca del comportamiento de la mascota.
 * Sensor de proximidad. Detecta la presencia de la mascota cuando la misma se encuentra a X cm de distancia (o cercana) del plato de comida.
+* Sensor PIR
 
 
 
