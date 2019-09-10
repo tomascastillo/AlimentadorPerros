@@ -75,7 +75,7 @@ El usuario podrá configurar horarios de comida con la app, así el alimentador 
 * Luces LED 
 
 ## Sensores
-* Sensor de peso o balanza. Detecta la carga de comida dentro del plato de la mascota. 
+* Sensor de peso(celda de carga). Detecta la carga de comida dentro del plato de la mascota. 
 * Reloj RTC. Permite programar los eventos para la descarga de comida y alertas acerca del comportamiento de la mascota.
 * Sensor de ultrasonido. Detecta el nivel de alimento en al alimentador.
 * Sensor PIR. Detecta la presencia de la mascota cuando la misma se encuentra a X cm de distancia (o cercana) del plato de comida.
