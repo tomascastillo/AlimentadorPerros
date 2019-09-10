@@ -1,0 +1,12 @@
+Pruebas realizadas en el LAB:
+-1. Probamos un LED
+-2. Probamos el Servo
+-3. Probamos el Ultrasonido con un LED
+-4. Probamos el display
+-5. Probamos el PIR
+-6. Probamos el PIR con el display
+
+
+Pruebas a realizar:
+-1. Probar el RTC
+-2. Probar calibrado celda de carga
