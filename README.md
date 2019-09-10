@@ -11,6 +11,7 @@ Proyecto de cursada de la materia Sistemas Operativos Avanzados.
 * Fernandez, Julian Gonzalo; DNI 38457070
 * Fernandez, Nicolas; DNI 38168581
 * Orlando, Javier; DNI 34850430
+* Vargas, Gabriel; DNI 38059006
 
 ## Nombre del grupo: M1
 
