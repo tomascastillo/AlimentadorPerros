@@ -31,17 +31,17 @@ Este proyecto consta de un alimentador automático de perros
 ## ¿Qué hace? 
 
 Entre sus funcionalidades, encontramos:
-          * Gestión de la rapidez de la entrega de comida: el alimentador podrá soltar de a muchos o a pocos granos de comida, según configure el usuario en la app.
-          * Gestión de la dosis de la comida: el usuario podrá elegir la cantidad de comida para cada comida del perro.
-          * Gestión de horarios de alimentación: el usuario podrá elegir los horarios de cada día para alimentar a su perro.
-          * Alimentar manualmente: el usuario con presionar un botón en la app podrá alimentar a su perro en el momento.
-          * Determinación de restos: el sistema recolectará datos sobre si el perro dejó comida o no, cada vez que comió.
-          * Gestión de perfil del perro: el usuario podrá cargar al sistema el nombre, edad, raza, peso y altura de su perro.
-          * Sugerencia de rutina especial para el perro: en caso de enfermedad del perro o la necesidad de que el mismo suba o baje de peso, la app le sugerirá rutinas al usuario que puede seguir.
-          * Sugerencia de rutina para el perro en base a su perfil (raza, edad, tamaño)
-          * Alerta de recarga de comida en el compartimiento de comida.
-          * Estadísticas de comidas
-          * Alertas: el usuario podrá configurar alertas si el perro comió mucho o poco en el día
+* Gestión de la rapidez de la entrega de comida: el alimentador podrá soltar de a muchos o a pocos granos de comida, según configure el usuario en la app.
+* Gestión de la dosis de la comida: el usuario podrá elegir la cantidad de comida para cada comida del perro.
+* Gestión de horarios de alimentación: el usuario podrá elegir los horarios de cada día para alimentar a su perro.
+* Alimentar manualmente: el usuario con presionar un botón en la app podrá alimentar a su perro en el momento.
+* Determinación de restos: el sistema recolectará datos sobre si el perro dejó comida o no, cada vez que comió.
+* Gestión de perfil del perro: el usuario podrá cargar al sistema el nombre, edad, raza, peso y altura de su perro.
+* Sugerencia de rutina especial para el perro: en caso de enfermedad del perro o la necesidad de que el mismo suba o baje de peso, la app le sugerirá rutinas al usuario que puede seguir.
+* Sugerencia de rutina para el perro en base a su perfil (raza, edad, tamaño)
+* Alerta de recarga de comida en el compartimiento de comida.
+* Estadísticas de comidas
+* Alertas: el usuario podrá configurar alertas si el perro comió mucho o poco en el día
 
 
 
