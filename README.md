@@ -94,7 +94,11 @@ sistema completo, Procedimientos, procesos, insumos, resultados, servicios en la
 
 ## Funcional
 
+![Funcional(]https://github.com/tomascastillo/M1/blob/master/Sistema-Embebido/Diagramas/Diagrama%20funcional.jpg)
+
 ## Físico (bloques y boceto)
+
+![Fisico](https://github.com/tomascastillo/M1/blob/master/Sistema-Embebido/Diagramas/Diagrama%20fisico.jpg)
 
 ## Software (nombre real/final de las funciones)
 
