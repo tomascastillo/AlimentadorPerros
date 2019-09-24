@@ -71,7 +71,7 @@ El usuario podrá configurar horarios de comida con la app, así el alimentador 
 # Descripción Técnica de todo el sistema:
 ## Actuadores: 
 * Servo sg90. Expide la comida del alimentador hacia el plato.
-* Display lcd 16x02 . Muestra los estados del alimentador. 
+* Buzzer activo. 
 * Luces LED 
 
 ## Sensores
