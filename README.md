@@ -39,10 +39,10 @@ Entre sus funcionalidades, encontramos:
 * Gestión de perfil del perro: el usuario podrá cargar al sistema el nombre, edad, raza, peso y altura de su perro.
 * Sugerencia de rutina especial para el perro: en caso de enfermedad del perro o la necesidad de que el mismo suba o baje de peso, la app le sugerirá rutinas al usuario que puede seguir.
 * Sugerencia de rutina para el perro en base a su perfil (raza, edad, tamaño)
-* Alerta de recarga de comida en el compartimiento de comida.
-* Estadísticas de comidas
-* Alertas: el usuario podrá configurar alertas si el perro comió mucho o poco en el día
-
+* Alerta de recarga de comida en el compartimiento de comida: cuando el depósito se quede con poca comida, se prenderá un LED indicando esta situación.
+* Estadísticas de comidas: se podrá ver en la app cuánto comió el perro en cada comida.
+* Alertas de comida: el usuario podrá configurar alertas si el perro comió mucho o poco en el día.
+* Alerta de expedición de comida: el sistema activará una señal sonora mediante el buzzer para indicar la expedición de comida.
 
 
 ## ¿Qué problema soluciona? 
@@ -63,23 +63,23 @@ El usuario podrá configurar horarios de comida con la app, así el alimentador 
 
 ## ¿Como lo hace?
 
-
+El usuario deberá cargar comida en un depósito. En la app, el usuario debe cargar el perfil de su perro 
 
 ## ¿Qué ofrece como resultado?
 
 
 # Descripción Técnica de todo el sistema:
 ## Actuadores: 
-* Servo sg90. Expide la comida del alimentador hacia el plato.
-* Buzzer activo. 
-* Luces LED 
+* Servo sg90. Expide la comida del alimentador hacia el plato, va variando el ángulo de apertura del depósito para expedir más o menos comida.
+* Buzzer activo: cuando se expide la comida, el buzzer emitirá un sonido de aviso. 
+* Luces LED: se activará una luz led para indicar la falta de comida en el depósito para que el usuario haga una recarga de comida.
 
 ## Sensores
-* Sensor de peso(celda de carga). Detecta la carga de comida dentro del plato de la mascota. 
-* Reloj RTC. Permite programar los eventos para la descarga de comida y alertas acerca del comportamiento de la mascota.
-* Sensor de ultrasonido. Detecta el nivel de alimento en al alimentador.
+* Sensor de peso(celda de carga). Detecta la carga de comida dentro del plato de la mascota, y cuánto comió el perro.
+* Sensor de ultrasonido. Detecta el nivel de alimento en el depósito.
 * Sensor PIR. Detecta la presencia de la mascota cuando la misma se encuentra a X cm de distancia (o cercana) del plato de comida.
 
+## Reloj RTC. Permite programar los eventos para la descarga de comida y alertas acerca del comportamiento de la mascota.
 
 
 Que lógica tiene el sistema completo. Como es el
