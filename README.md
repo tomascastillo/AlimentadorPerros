@@ -92,45 +92,16 @@ sistema completo, Procedimientos, procesos, insumos, resultados, servicios en la
 
 # Diagramas
 
-## De bloques, partes
-
 ## Funcional
 
-![Funcional](https://github.com/tomascastillo/M1/blob/master/Sistema-Embebido/Diagramas/Diagrama%20funcional.jpg)
+![Funcional](https://github.com/tomascastillo/M1/blob/master/Sistema-Embebido/Diagramas/Diagrama%20Funcional.png)
 
 ## Físico (bloques y boceto)
 
-![Fisico](https://github.com/tomascastillo/M1/blob/master/Sistema-Embebido/Diagramas/Diagrama%20fisico.jpg)
+![Fisico](https://github.com/tomascastillo/M1/blob/master/Sistema-Embebido/Diagramas/esquema%20fisico.png)
 
 ## Software (nombre real/final de las funciones)
+![Software](https://github.com/tomascastillo/M1/blob/master/Sistema-Embebido/Diagramas/Diagrama%20de%20Software.png)
 
 ## Lógico
-
-# Firmware
-: Como es el firmware, funciones realizadas, estados, interacciones
-- Descripción de la Aplicación Android:
-
-## Descripción de la Aplicación móvil. ¿Cuál es su funcionalidad?
-
-## Explicación del funcionamiento
-
-## Activitys que la conforman, explicación de las partes. Menú de secuencias de
-Activitys, árbol de opciones. (captura de pantalla).
-
-## Descripción de los sensores utilizados del Smartphone
-
-## Diagrama de comunicación con el sistema embebido. Metodología utilizada para
-comunicarse (Bluetooth, Wifi, Servicios web, Servidor en la nube, Api, REST,
-Firebase, etc.)
-
-## Herramientas complementarias utilizadas: Si se usa base de datos (SQLite, etc.)
-
-# Manual de uso:
-
-# Conclusiones
-
-## Qué libertades se tomaron el en prototipado y por qué (motivo)
-
-## Que seguirán desarrollando
-
-## Cómo lo mejorarían con mínima inversión (lógica, soft)
+![Logico](https://github.com/tomascastillo/M1/blob/master/Sistema-Embebido/Diagramas/Diagrama_logico1.png)
