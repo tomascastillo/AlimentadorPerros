@@ -32,17 +32,18 @@ Este proyecto consta de un alimentador automático de perros
 
 Entre sus funcionalidades, encontramos:
 * Gestión de la rapidez de la entrega de comida: el alimentador podrá soltar de a muchos o a pocos granos de comida, según configure el usuario en la app.
-* Gestión de la dosis de la comida: el usuario podrá elegir la cantidad de comida para cada comida del perro.
+* Gestión de la dosis de la comida: el usuario podrá elegir la cantidad de comida para cada tipo de perro.
 * Gestión de horarios de alimentación: el usuario podrá elegir los horarios de cada día para alimentar a su perro.
-* Alimentar manualmente: el usuario con presionar un botón en la app podrá alimentar a su perro en el momento.
+* Alimentar manualmente: el usuario con un movimiento del celular detectado por los sensores de Android,  la app podrá alimentar a su perro en el momento.
 * Determinación de restos: el sistema recolectará datos sobre si el perro dejó comida o no, cada vez que comió.
 * Gestión de perfil del perro: el usuario podrá cargar al sistema el nombre, edad, raza, peso y altura de su perro.
 * Sugerencia de rutina especial para el perro: en caso de enfermedad del perro o la necesidad de que el mismo suba o baje de peso, la app le sugerirá rutinas al usuario que puede seguir.
 * Sugerencia de rutina para el perro en base a su perfil (raza, edad, tamaño)
-* Alerta de recarga de comida en el compartimiento de comida: cuando el depósito se quede con poca comida, se prenderá un LED indicando esta situación.
-* Estadísticas de comidas: se podrá ver en la app cuánto comió el perro en cada comida.
-* Alertas de comida: el usuario podrá configurar alertas si el perro comió mucho o poco en el día.
-* Alerta de expedición de comida: el sistema activará una señal sonora mediante el buzzer para indicar la expedición de comida.
+* El sistema produce un alerta de recarga de comida en el compartimiento de comida y notifica a la app. 
+* Estadísticas de comidas
+* Alertas: el sistema notificara alertas en la app,  si el perro comió mucho o poco en el día.
+* Acondicionamiento canino: El sistema emitira un sonido si detecta que el perro come muy rapido , para acondicionar la conducta alimenticia del mismo.
+       
 
 
 ## ¿Qué problema soluciona? 
@@ -59,6 +60,7 @@ El usuario podrá configurar horarios de comida con la app, así el alimentador 
 
 * Cumplir con los horarios de comida configurados por el usuario
 * Cumplir con las dosis de comida configuradas por el usuario
+* Cumplir con las dosis de comida segun el comportamiento del perro.
 
 
 ## ¿Como lo hace?
@@ -71,7 +73,7 @@ El usuario deberá cargar comida en un depósito. En la app, el usuario debe car
 # Descripción Técnica de todo el sistema:
 ## Actuadores: 
 * Servo sg90. Expide la comida del alimentador hacia el plato, va variando el ángulo de apertura del depósito para expedir más o menos comida.
-* Buzzer activo: cuando se expide la comida, el buzzer emitirá un sonido de aviso. 
+* Buzzer activo: El sistema emitira un sonido si detecta que el perro come muy rapido , para acondicionar la conducta alimenticia del mismo.
 * Luces LED: se activará una luz led para indicar la falta de comida en el depósito para que el usuario haga una recarga de comida.
 
 ## Sensores
