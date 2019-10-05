@@ -105,3 +105,58 @@ sistema completo, Procedimientos, procesos, insumos, resultados, servicios en la
 
 ## Lógico
 ![Logico](https://github.com/tomascastillo/M1/blob/master/Sistema-Embebido/Diagramas/Diagrama_logico1.png)
+
+
+## Manual de uso
+
+Al iniciar la aplicación, el sistema nos preguntará si queremos crear un perfil o cargar un perfil por defecto.
+
+### Crear Perfil
+
+Si se selecciona la opción de crear un perfil, se deberá ingresar peso, edad (en meses), si el perro está excedido de peso, con sobrepeso, excedido, o flaco, y su nivel de actividad (bajo, medio, alto). Luego se mostrará una rutina recomendada.
+Si no se desea usar la rutina recomendada, se podrá crear una rutina personalizada.
+
+### Crear rutina
+
+Para crear una rutina, se debe ingresar el horario y la cantidad de comida.
+
+### Cargar perfil por defecto
+
+Si se selecciona esta opción, el usuario tendrá un perfil de perro por defecto y se recomendará una rutina por defecto.
+
+### Menú principal
+
+En el menú principal tendremos las siguientes opciones:
+
+#### Mostrar rutina actual
+
+En esta opción, se mostrará la rutina de comidas que actualmente se le está dando al perro.
+
+#### Modificar rutina
+
+En esta opción, el usuario podrá cambiar el horario o cantidad de comida de la rutina.
+
+
+#### Cambiar perfil
+
+En esta opción, se podrán cambiar los datos del perfil del perro.
+
+#### Alimentación manual
+
+En esta opción, el usuario solo con pulsar un botón en la app podrá alimentar al perro en el momento, ingresando la cantidad de comida a soltar.
+
+#### Mostrar historial de comidas
+
+En esta opción, se mostrará el historial con fecha y hora y cantidad de comida de cada comida del perro
+
+#### Recarga de comida en depósito
+
+Cuando el depósito esté con poca comida se activará una luz LED para que sea recargado.
+
+#### Alerta de comida rápida
+
+Si el perro está comiendo muy rápido, se activará una alerta sonora para que deje de hacerlo.
+
+#### Alerta de cantidad de comida
+El sistema notificara alertas en la app,  si el perro comió mucho o poco en el día.
+
