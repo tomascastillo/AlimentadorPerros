@@ -106,6 +106,9 @@ sistema completo, Procedimientos, procesos, insumos, resultados, servicios en la
 ## Lógico
 ![Logico](https://github.com/tomascastillo/M1/blob/master/Sistema-Embebido/Diagramas/Diagrama_logico1.png)
 
+## Conexión
+![Conexión](https://github.com/tomascastillo/M1/blob/master/Sistema-Embebido/Diagramas/diagramaCircuito.jpg)
+
 
 ## Manual de uso
 
