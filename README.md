@@ -5,7 +5,7 @@ Proyecto de cursada de la materia Sistemas Operativos Avanzados.
 
 ## Materia: Sistemas Operativos Avanzados
 
-## Alumnos: 
+## Alumnos:
 * Brude, Alejandro; DNI 33908097
 * Castillo, Tomás Eugenio; DNI 39769558
 * Fernandez, Julian Gonzalo; DNI 38457070
@@ -17,10 +17,10 @@ Proyecto de cursada de la materia Sistemas Operativos Avanzados.
 
 ## Nombre del proyecto: Alimentador Perros
 
-Este proyecto consta de un alimentador automático de perros, linkeado con una aplicación Android que configure el alimentador.
+Este proyecto consta de un alimentador automático de perros, linkeado con una aplicación Android que configura el alimentador.
 
 # Descripción del proyecto:
-Este proyecto consta de un alimentador automático de perros, linkeado con una aplicación Android que configure el alimentador. El usuario podrá configurar horarios de comida con la app, así el alimentador soltará la comida a esa hora o bien manualmente el usuario podrá decidir el momento de alimentar a su perro manualmente con un botón en la app. 
+Este proyecto consta de un alimentador automático de perros, linkeado con una aplicación Android que configura el alimentador. El usuario deberá solamente configurar el perfil del perro con la app, de esta forma, el sistema programará y mostrará la rutina que deberá seguir el can.  
 
 
 ## ¿Qué es el proyecto?
@@ -28,50 +28,45 @@ Este proyecto consta de un alimentador automático de perros, linkeado con una a
 Este proyecto consta de un alimentador automático de perros
 
 
-## ¿Qué hace? 
+## ¿Qué hace?
 
-Entre sus funcionalidades, encontramos:
-* Gestión de la rapidez de la entrega de comida: el alimentador podrá soltar de a muchos o a pocos granos de comida, según configure el usuario en la app.
-* Gestión de la dosis de la comida: el usuario podrá elegir la cantidad de comida para cada tipo de perro.
-* Gestión de horarios de alimentación: el usuario podrá elegir los horarios de cada día para alimentar a su perro.
-* Alimentar manualmente: el usuario con un movimiento del celular detectado por los sensores de Android,  la app podrá alimentar a su perro en el momento.
+* Alimentar manualmente: el  usuario con un movimiento del celular detectado por los sensores de Android,  la app podrá alimentar a su perro en el momento.
 * Determinación de restos: el sistema recolectará datos sobre si el perro dejó comida o no, cada vez que comió.
-* Gestión de perfil del perro: el usuario podrá cargar al sistema el nombre, edad, raza, peso y altura de su perro.
-* Sugerencia de rutina especial para el perro: en caso de enfermedad del perro o la necesidad de que el mismo suba o baje de peso, la app le sugerirá rutinas al usuario que puede seguir.
-* Sugerencia de rutina para el perro en base a su perfil (raza, edad, tamaño)
-* El sistema produce un alerta de recarga de comida en el compartimiento de comida y notifica a la app. 
-* Estadísticas de comidas
-* Alertas: el sistema notificara alertas en la app,  si el perro comió mucho o poco en el día.
+* Gestión de perfil del perro: el usuario podrá cargar al sistema la raza, peso, fecha de nacimiento, nivel de actividad y estado del perro.
+* El sistema configura la rutina para el perro en base a su perfil cargado o por defecto.
+* La app muestra el historial de comidas .
+* La app muestra notificaciones al usuario con respecto a la dieta del perro o el funcionamiento del alimentador.
 * Acondicionamiento canino: El sistema emitira un sonido si detecta que el perro come muy rapido , para acondicionar la conducta alimenticia del mismo.
-       
 
 
-## ¿Qué problema soluciona? 
 
-El sistema podrá alimentar automáticamente al perro, con los horarios configurados por el usuario, además podrá sugerir rutinas en caso de que el perro tenga problemas de enfermedad o de peso.
+## ¿Qué problema soluciona?
+
+El sistema podrá alimentar automáticamente al perro, sin intervencion del usuario.
 
 
 ## ¿Cómo se usa?
 
-El usuario podrá configurar horarios de comida con la app, así el alimentador soltará la comida a esa hora o bien manualmente el usuario podrá decidir el momento de alimentar a su perro manualmente con un botón en la app. 
+EL usuario ingresa a la app y elige el tipo de perfil que desea utilizar.
+Si el usuario elige Crear perfil , el sistema le mostrara el formulario para cargar los datos del perro.
+Luego el sistema configura la rutina , habilita el uso del alimentador y muestra el menu principal.
+Si el usuario no elige crear perfil , el sistema genera un perfil y rutina por defecto, habilita el uso del alimentador y muestra el menu principal.
+Luego , el usuario puede visualizar desde el menu principal las siguientes opciones
+- Modificar Perfil
+- Mostrar Historial de comidas
+- Mostrar historial de notificaciones
+- Recarga historial de comidas.
+Ademas en la misma pantalla el usuario puede visualizar la rutina programada por el sistema.
 
 
 # Objetivos del sistema
 
-* Cumplir con los horarios de comida configurados por el usuario
-* Cumplir con las dosis de comida configuradas por el usuario
 * Cumplir con las dosis de comida segun el comportamiento del perro.
-
-
-## ¿Como lo hace?
-
-El usuario deberá cargar comida en un depósito. En la app, el usuario debe cargar el perfil de su perro 
-
-## ¿Qué ofrece como resultado?
+* Notificar al usuario del comportamiento del perro.
 
 
 # Descripción Técnica de todo el sistema:
-## Actuadores: 
+## Actuadores:
 * Servo sg90. Expide la comida del alimentador hacia el plato, va variando el ángulo de apertura del depósito para expedir más o menos comida.
 * Buzzer activo: El sistema emitira un sonido si detecta que el perro come muy rapido , para acondicionar la conducta alimenticia del mismo.
 * Luces LED: se activará una luz led para indicar la falta de comida en el depósito para que el usuario haga una recarga de comida.
@@ -119,9 +114,6 @@ Al iniciar la aplicación, el sistema nos preguntará si queremos crear un perfi
 Si se selecciona la opción de crear un perfil, se deberá ingresar peso, edad (en meses), si el perro está excedido de peso, con sobrepeso, excedido, o flaco, y su nivel de actividad (bajo, medio, alto). Luego se mostrará una rutina recomendada.
 Si no se desea usar la rutina recomendada, se podrá crear una rutina personalizada.
 
-### Crear rutina
-
-Para crear una rutina, se debe ingresar el horario y la cantidad de comida.
 
 ### Cargar perfil por defecto
 
@@ -131,35 +123,19 @@ Si se selecciona esta opción, el usuario tendrá un perfil de perro por defecto
 
 En el menú principal tendremos las siguientes opciones:
 
-#### Mostrar rutina actual
 
-En esta opción, se mostrará la rutina de comidas que actualmente se le está dando al perro.
-
-#### Modificar rutina
-
-En esta opción, el usuario podrá cambiar el horario o cantidad de comida de la rutina.
-
-
-#### Cambiar perfil
+#### Modificar perfil
 
 En esta opción, se podrán cambiar los datos del perfil del perro.
 
-#### Alimentación manual
+#### Recarga manual del plato
 
-En esta opción, el usuario solo con pulsar un botón en la app podrá alimentar al perro en el momento, ingresando la cantidad de comida a soltar.
+En esta opción, el usuario solo con mover el celular  podrá alimentar al perro en el momento.
 
 #### Mostrar historial de comidas
 
-En esta opción, se mostrará el historial con fecha y hora y cantidad de comida de cada comida del perro
+En esta opción, se mostrará el historial con fecha y hora y cantidad de comida consumida por el perro
 
-#### Recarga de comida en depósito
+#### Mostrar historial de notificaciones
 
-Cuando el depósito esté con poca comida se activará una luz LED para que sea recargado.
-
-#### Alerta de comida rápida
-
-Si el perro está comiendo muy rápido, se activará una alerta sonora para que deje de hacerlo.
-
-#### Alerta de cantidad de comida
-El sistema notificara alertas en la app,  si el perro comió mucho o poco en el día.
-
+En esta opción, se mostrará el historial de las diferentes alertas que el sistema emite al usuario.
