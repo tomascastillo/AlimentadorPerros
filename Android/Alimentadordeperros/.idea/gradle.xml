@@ -11,6 +11,14 @@
         <option name="resolveModulePerSourceSet" value="false" />
         <option name="testRunner" value="PLATFORM" />
       </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="LOCAL" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/app" />
+        <option name="gradleHome" value="C:/gradle-4.10.2-bin/gradle-4.10.2" />
+        <option name="resolveModulePerSourceSet" value="false" />
+        <option name="testRunner" value="PLATFORM" />
+        <option name="useQualifiedModuleNames" value="true" />
+      </GradleProjectSettings>
     </option>
   </component>
 </project>

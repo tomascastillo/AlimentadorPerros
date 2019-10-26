@@ -16,6 +16,8 @@ Servo servoMotor;
 
 int tiempo_inicial = 0;
 int tiempo_final = 0;
+int tiempo_inicial2 = 0;
+int tiempo_final2 = 0;
 const int LEDPin = 13;
 const int PIRPin = 7;
 int bandera = 0;
@@ -25,6 +27,7 @@ const int Echo = 2;    //Pin digital 3 para el Echo del sensor
 int banderaLecturaInicial = 0;
 int lecturaInicial = 0;
 int operacion = 0;
+int operacion_buzzer=0;
 /*
 1. servo
 2. balanza
@@ -47,12 +50,12 @@ void setup()
   servoMotor.attach(3);
   pinMode(LEDPin, OUTPUT);
   pinMode(PIRPin, INPUT);
-  //pinMode(BUZZERpin, OUTPUT);  //definir pin como salida
+  pinMode(BUZZERpin, OUTPUT);  //definir pin como salida
   pinMode(Trigger, OUTPUT);   //pin como salida
   pinMode(Echo, INPUT);       //pin como entrada
   digitalWrite(Trigger, LOW); //Inicializamos el pin con 0
   tiempo_inicial = millis();
-  
+  digitalWrite(BUZZERpin, LOW); 
 }
 
 void loop()
@@ -65,51 +68,36 @@ void loop()
     {
       case 0:
       cerrar_servo();
-      operacion=1;
+    
       break;
       
       case 1:
       abrir_servo();
-      operacion=2;
+      
       break;
 
       case 2:
-      cerrar_servo();
+      cerrar_servo2();
       bandera=1;
+       Serial.print("Valor de lectura inicial:  ");
+       lecturaInicial = balanza.get_value(10);
+       Serial.println(lecturaInicial);
+       banderaLecturaInicial = 1;
+      Serial.println("delay para sacar la comida, 5 segundos...");
       break;
 
       default:
       break;
     }
-      tiempo_final = millis() - tiempo_inicial;
-      if (tiempo_final > 1000)
-      {
-       /**/ tiempo_inicial = millis();
-        servoMotor.write(0);
-        // Esperamos 1 segundo
-        banderaLecturaInicial = 1;
-        Serial.print("Valor de lectura inicial:  ");
-        lecturaInicial = balanza.get_value(10);
-        Serial.println(balanza.get_value(10), 0);
-      }
-      else
-      {
-      }
+    
     }
     else
     {
     }
-   
 
-  }
-  //verificar que el perro siga comiendo
-  //si come muy rapido, activar el buzzer
-
-  //***********************************FALTA:*****************************************************************
-  //esta lectura, hacerla cada 1 segundo.
-  Serial.println("delay para sacar la comida, 10 segundos...");
+  
   tiempo_final = millis() - tiempo_inicial;
-  if (tiempo_final > 10000)
+  if (tiempo_final > 5000)
   {
     tiempo_inicial = millis();
     int value = digitalRead(PIRPin);
@@ -126,29 +114,25 @@ void loop()
       if (lecturaComiendo == lecturaInicial)
       {
       }                                                                                                                              //no esta comiendo nada
-      if (lecturaComiendo < lecturaInicial - 4000 && lecturaComiendo != 0 && banderaLecturaInicial == 1 && banderaYaSonoBuzzer == 0) //esta comiendo muy rapido
+      if (lecturaComiendo < lecturaInicial - 4000 /*&& lecturaComiendo != 0 && banderaLecturaInicial == 1 && banderaYaSonoBuzzer == 0*/) //esta comiendo muy rapido
       {
         //activar buzzer
-        
-        digitalWrite(BUZZERpin, HIGH); // poner el Pin en HIGH
-        tiempo_final = millis() - tiempo_inicial;
-        if (tiempo_final > 1000)
+        switch(operacion_buzzer)
         {
-          tiempo_inicial = millis();
-          digitalWrite(BUZZERpin, LOW); // poner el Pin en LOW
-          tiempo_final = millis() - tiempo_inicial;
-          if (tiempo_final > 1000)
-          {
-            tiempo_inicial = millis(); //tone(BUZZERpin,30);
-            banderaYaSonoBuzzer = 1;
-          }
-          else
-          {
-          }
-        }
-        else
-        {
-        }
+          case 0:
+          Serial.print("case 0");
+          prender_buzzer();
+          break;
+
+          case 1:
+          Serial.print("case 1");
+          apagar_buzzer();
+          banderaYaSonoBuzzer = 1;
+          break;
+
+          default:
+          break;
+        }        
       }
     }
     else
@@ -156,58 +140,57 @@ void loop()
     {
       int lecturaFinal = balanza.get_value(10);
     }
-  }*/
-  else
-  {/*
-    //US
-    long t; //timepo que demora en llegar el eco
-    long d; //distancia en centimetros
-
-    digitalWrite(Trigger, HIGH);
-    delayMicroseconds(10); //Enviamos un pulso de 10us
-    digitalWrite(Trigger, LOW);
-
-    t = pulseIn(Echo, HIGH); //obtenemos el ancho del pulso
-    d = t / 59;              //escalamos el tiempo a una distancia en cm
-
-    Serial.print("Distancia ultrasonido: ");
-    Serial.print(d); //Enviamos serialmente el valor de la distancia
-    Serial.print("cm");
-    Serial.println();
-    delay(100); //Hacemos una pausa de 100ms
-    //dist>17 -> prendo LED
-    if (d > 17)
-    {
-      digitalWrite(LEDPin, HIGH);
-      delay(50);
-      digitalWrite(LEDPin, LOW);
-      delay(50);
-    }
-    else
-    {
-      digitalWrite(LEDPin, LOW);
-    }*/
   }
+  
+   
 }
-void abrir_servo()
+void prender_buzzer()
 {
+    digitalWrite(BUZZERpin, HIGH); // poner el Pin en HIGH
+    tiempo_final = millis() - tiempo_inicial;
+    if (tiempo_final > 1000)
+    {
+    tiempo_inicial = millis();
+    operacion_buzzer=1;
+    }
+}
+void apagar_buzzer()
+{
+    digitalWrite(BUZZERpin, LOW); // poner el Pin en HIGH
+    tiempo_final = millis() - tiempo_inicial;
+    if (tiempo_final > 1000)
+    {
+    tiempo_inicial = millis();
+    }    
+}
+  void abrir_servo()
+{
+   servoMotor.write(135);
    tiempo_final = millis() - tiempo_inicial;
    if (tiempo_final > 1000)
    {
      tiempo_inicial = millis();
-     // Desplazamos a la posición 90º
-     servoMotor.write(135);
-     // Esperamos 1 segundo
+     operacion=2;
    }
 }
 void cerrar_servo()
 {
+   servoMotor.write(0);
    tiempo_final = millis() - tiempo_inicial;
    if (tiempo_final > 1000)
    {
      tiempo_inicial = millis();
-     // Desplazamos a la posición 90º
-     servoMotor.write(0);
-     // Esperamos 1 segundo
+     operacion=1;
+   }
+
+}
+void cerrar_servo2()
+{
+   servoMotor.write(0);
+   tiempo_final = millis() - tiempo_inicial;
+   if (tiempo_final > 1000)
+   {
+     tiempo_inicial = millis();
+
    }
 }
