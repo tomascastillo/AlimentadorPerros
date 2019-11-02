@@ -7,8 +7,8 @@ HX711 balanza(DOUT, CLK);
 
 void setup() {
   Serial.begin(9600);
-  Serial.print("Lectura del valor del ADC:  ");
-  Serial.println(balanza.read());
+  //Serial.print("Lectura del valor del ADC:  ");
+  //Serial.println(balanza.read());
   Serial.println("No ponga ningun  objeto sobre la balanza");
   Serial.println("Destarando...");
   balanza.set_scale(); //La escala por defecto es 1

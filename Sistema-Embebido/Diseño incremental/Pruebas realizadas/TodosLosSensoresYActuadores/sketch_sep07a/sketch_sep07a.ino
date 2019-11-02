@@ -156,7 +156,7 @@ void loop()
     {
       int lecturaFinal = balanza.get_value(10);
     }
-  }*/
+  }
   else
   {/*
     //US
@@ -164,19 +164,28 @@ void loop()
     long d; //distancia en centimetros
 
     digitalWrite(Trigger, HIGH);
-    delayMicroseconds(10); //Enviamos un pulso de 10us
-    digitalWrite(Trigger, LOW);
-
-    t = pulseIn(Echo, HIGH); //obtenemos el ancho del pulso
+    int tiempo_micros_inicial=micros();
+    tiempo_micros_final= micros() - tiempo_micros_inicial;
+   if (tiempo_micros_final > 10)
+   {
+     tiempo_micros_inicial = micros();
+     digitalWrite(Trigger, LOW);
+       t = pulseIn(Echo, HIGH); //obtenemos el ancho del pulso
     d = t / 59;              //escalamos el tiempo a una distancia en cm
 
     Serial.print("Distancia ultrasonido: ");
     Serial.print(d); //Enviamos serialmente el valor de la distancia
     Serial.print("cm");
     Serial.println();
-    delay(100); //Hacemos una pausa de 100ms
-    //dist>17 -> prendo LED
-    if (d > 17)
+   } 
+    //delayMicroseconds(10); //Enviamos un pulso de 10us
+    
+
+     tiempo_final = millis() - tiempo_inicial;
+   if (tiempo_final > 100)
+   {
+     tiempo_inicial = millis();
+     if (d > 17)
     {
       digitalWrite(LEDPin, HIGH);
       delay(50);
@@ -186,8 +195,12 @@ void loop()
     else
     {
       digitalWrite(LEDPin, LOW);
-    }*/
-  }
+    } 
+   }
+   // delay(100); //Hacemos una pausa de 100ms
+    //dist>17 -> prendo LED
+   
+  }*/
 }
 void abrir_servo()
 {

@@ -2,6 +2,7 @@
 #include <Servo.h>
 #include <HX711.h>
 #include <Wire.h>
+#include <SoftwareSerial.h>
 
 #define DOUT A1
 #define CLK A0
@@ -13,6 +14,7 @@ lo mismo con el buzzer, activo el buzzer en HIGH y tengo que esperar un segundo 
 HX711 balanza(DOUT, CLK);
 // Declaramos la variable para controlar el servo
 Servo servoMotor;
+SoftwareSerial mySerial(10, 9);
 int contador=0;
 int tiempo_inicial = 0;
 int tiempo_final = 0;
@@ -43,6 +45,7 @@ char cadena_recibida_bluetooth='9';
 void setup()
 {
   Serial.begin(9600);
+  mySerial.begin(9600);
   //Serial.print("Lectura del valor del ADC:  ");
   //Serial.println(balanza.read());
   Serial.println("No ponga ningun objeto sobre la balanza");
@@ -64,6 +67,12 @@ void setup()
 
 void loop()
 {
+  if (mySerial.available()>0){
+    cadena_recibida_bluetooth=mySerial.read();
+    Serial.println(cadena_recibida_bluetooth);
+    int cadena=cadena_recibida_bluetooth-'0';
+    if(cadena<='3')
+    {
       switch (operacion_general)
       {
       case 0:
@@ -85,6 +94,10 @@ void loop()
       default:
         break;
       }
+    }
+    
+  }
+
 }
 void medir_cantidad_en_deposito_y_alertar()
 {
@@ -184,14 +197,16 @@ void alimentar()
 }
 void medir_peso_inicial()
 {
-  if(bandera==0)
+  if(contador<=cadena_recibida_bluetooth-'0')//para transformar al valor entero
   {
-    bandera=1;
-    Serial.print("Valor de lectura inicial:  ");
+  contador++;
+  Serial.print("Valor de lectura inicial:  ");
   lecturaInicial = balanza.get_value(10);
   Serial.println(lecturaInicial);
   banderaLecturaInicial = 1;
   Serial.println("delay para sacar la comida, 5 segundos...");
+  
+  }
   tiempo_final = millis() - tiempo_inicial;
   if (tiempo_final > 5000) //5 segundos para sacar la comida
   {
@@ -199,8 +214,6 @@ void medir_peso_inicial()
     operacion_general = 2;
     operacion_buzzer=0;
   }
-  }
-  
   
   
 }

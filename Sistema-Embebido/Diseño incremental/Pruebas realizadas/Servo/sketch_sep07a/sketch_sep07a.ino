@@ -19,10 +19,7 @@ void loop() {
   // Esperamos 1 segundo
   delay(1000);
   
-  // Desplazamos a la posición 90º
-  servoMotor.write(135);
-  // Esperamos 1 segundo
-  delay(1000);
+  
   
   // Desplazamos a la posición 180º
   // servoMotor.write(180);
