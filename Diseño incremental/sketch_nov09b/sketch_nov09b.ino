@@ -50,7 +50,7 @@ void setup()
     balanza.tare(20);    //El peso actual es considerado Tara.
     Serial.println("Coloque un peso conocido:");
     // Iniciamos el servo para que empiece a trabajar con el pin 9
-    servoMotor.attach(3);
+    servoMotor.attach(6);
     pinMode(LEDPin, OUTPUT);
     pinMode(PIRPin, INPUT);
     pinMode(BUZZERpin, OUTPUT); //definir pin como salida

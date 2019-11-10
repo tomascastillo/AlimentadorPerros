@@ -77,24 +77,47 @@ void loop()
     
       switch (operacion_general)
       {
-      case 98:
+      case 0:
         Serial.println("case 98");
         leer_bluetooth();
         break;
         
-      case 0:
-        alimentar();
+      case 1:
+        abrir_servo_1_vez();
         break;
-    
-        case 1:
+
+            
+      case 2:
+        cerrar_servo_1_vez();
+        break;
+
+      case 3:
+        abrir_servo_2_veces();
+        break;
+
+            
+      case 4:
+        cerrar_servo_2_veces();
+        break;
+
+      case 5:
+        abrir_servo_3_veces();
+        break;
+
+            
+      case 6:
+        cerrar_servo_3_veces();
+        break;
+                
+        case 7:
         medir_peso_inicial();
         break;
         
-      case 2:
+      case 8:
         detectar_presencia_y_alertar();
         break;
     
-      case 3:
+      case 9:
         medir_cantidad_en_deposito_y_alertar();
         //reiniciar bandera para que se pueda volver a leer 
         banderaBluetooth =1;
@@ -105,6 +128,10 @@ void loop()
       }
 
 
+}
+void abrir_servo_1_vez()
+{
+  
 }
 void leer_bluetooth()
 {
@@ -122,6 +149,7 @@ void leer_bluetooth()
     
     if(cadena_recibida_bluetooth=='b')
     {
+      
       cantidad_de_aperturas_servo=2;  
 
     }
