@@ -1,4 +1,4 @@
-const int LEDPin= 13;
+const int LEDPin= 12;
 const int PIRPin= 2;
  
 void setup()
@@ -11,15 +11,11 @@ void loop()
 {
   int value= digitalRead(PIRPin);
  
-  if (value == HIGH)
-  {
+
     digitalWrite(LEDPin, HIGH);
-    delay(50);
+    delay(500);
     digitalWrite(LEDPin, LOW);
-    delay(50);
-  }
-  else
-  {
-    digitalWrite(LEDPin, LOW);
-  }
+    delay(500);
+  
+
 }

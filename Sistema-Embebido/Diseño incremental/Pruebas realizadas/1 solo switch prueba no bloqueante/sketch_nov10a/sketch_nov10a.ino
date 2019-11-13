@@ -14,7 +14,7 @@ lo mismo con el buzzer, activo el buzzer en HIGH y tengo que esperar un segundo 
 HX711 balanza(DOUT, CLK);
 // Declaramos la variable para controlar el servo
 Servo servoMotor;
-SoftwareSerial mySerial(10, 9);
+SoftwareSerial mySerial(10, 9);//rx,tx
 int bandera = 0;
 int contador = 0;
 int tiempo_inicial = 0;
@@ -34,7 +34,7 @@ int operacion_buzzer = 99;
 int operacion_ultrasound = 99;
 int operacion_general = 0;
 int banderaYaSonoBuzzer = 0;
-char cadena_recibida_bluetooth = '9';
+char cadena_recibida_bluetooth = 'z';
 int cantidad_de_aperturas_servo = 0;
 int bandera_servo = 0;
 int bandera_bluetooth = 0;
@@ -72,6 +72,11 @@ void setup()
 
 void loop()
 {
+  //agregar chequeo de peso inicial, chequeo de que no este trabado el servo, 
+  //chequeo de sensores constante, ver si quedo comida cuando el perro se fue
+  //diagrama de estados
+  //mandarle datos a la app
+  //si no hay info disponible, chequeo que el perro no este con el pir, si esta lo mando, y tambien mido la balanza, si hay variacion de la balanza es que el perro vino a comer
   //a 1 vez, b 2 veces, c 3 veces
   switch (operacion_general)
   {
@@ -82,6 +87,8 @@ void loop()
     //si hay info disponible hace lo que te piden, caso contrario volve a esperar info a menos que hayas llegado a 135. si no llego a 135, no volver a pedir info.
     //eso lo podemos saber una vez que pasaron los 3 segundos, blanquear la variable de cadena recibida con una letra z. si la variable es igual a z, pasaron los
     //3 segundos y puedo volver a pedir info.
+    tiempo_inicial=millis();
+
     break;
 
   case 1:
@@ -143,9 +150,11 @@ void loop()
 }
 int abrir_servo_1_vez()
 {
+  Serial.println("abriendo el servo...");
   servoMotor.write(135);
+
   tiempo_final = millis() - tiempo_inicial;
-  if (tiempo_final > 2000)
+  if (tiempo_final > 1000)
   {
     Serial.println("abrir servo 1");
     tiempo_inicial = millis();
@@ -156,9 +165,10 @@ int abrir_servo_1_vez()
 }
 int cerrar_servo_1_vez()
 {
-  servoMotor.write(0);
+  Serial.println("cerrando el servo...");
+  servoMotor.write(2);
   tiempo_final = millis() - tiempo_inicial;
-  if (tiempo_final > 2000)
+  if (tiempo_final > 1000)
   {
     Serial.println("cerrar servo 1");
     tiempo_inicial = millis();
@@ -176,7 +186,7 @@ int abrir_servo_2_veces()
 {
   servoMotor.write(135);
   tiempo_final = millis() - tiempo_inicial;
-  if (tiempo_final > 2000)
+  if (tiempo_final > 1000)
   {
     Serial.println("abrir servo 2");
     tiempo_inicial = millis();
@@ -189,7 +199,7 @@ int cerrar_servo_2_veces()
 {
   servoMotor.write(0);
   tiempo_final = millis() - tiempo_inicial;
-  if (tiempo_final > 2000)
+  if (tiempo_final > 1000)
   {
     Serial.println("cerrar servo2");
     tiempo_inicial = millis();
@@ -205,7 +215,7 @@ int abrir_servo_3_veces()
 {
   servoMotor.write(135);
   tiempo_final = millis() - tiempo_inicial;
-  if (tiempo_final > 2000)
+  if (tiempo_final > 1000)
   {
     Serial.println("abrir servo3");
     tiempo_inicial = millis();
@@ -218,7 +228,7 @@ int cerrar_servo_3_veces()
 {
   servoMotor.write(0);
   tiempo_final = millis() - tiempo_inicial;
-  if (tiempo_final > 2000)
+  if (tiempo_final > 1000)
   {
     Serial.println("cerrar servo3");
     tiempo_inicial = millis();
@@ -256,7 +266,7 @@ int leer_bluetooth()
       return 0;
   }
   else
-    return 0; 
+    return 7; 
 }
 int medir_cantidad_en_deposito_y_alertar()
 {
@@ -294,14 +304,19 @@ int medir_cantidad_en_deposito_y_alertar()
 
 int medir_peso_inicial()
 {
-  Serial.print("Valor de lectura inicial:  ");
-  lecturaInicial = balanza.get_value(10);
-  Serial.println(lecturaInicial);
-  banderaLecturaInicial = 1;
-  Serial.println("delay para sacar la comida, 5 segundos...(5 segundos para que coma el perro)");
-  tiempo_final = millis() - tiempo_inicial;
+  if(banderaLecturaInicial==0)
+  {
+    Serial.print("Valor de lectura inicial:  ");
+    lecturaInicial = balanza.get_value(10);
+    Serial.println(lecturaInicial);
+    banderaLecturaInicial = 1;
+    Serial.println("delay para sacar la comida, 5 segundos...(5 segundos para que coma el perro)");
+  }
+    tiempo_final = millis() - tiempo_inicial;    
+
   if (tiempo_final > 5000) //5 segundos para sacar la comida
   {
+    banderaLecturaInicial=0;
     tiempo_inicial = millis();
     return 8;
   }
@@ -339,9 +354,10 @@ int detectar_presencia_y_alertar()
 }
 int prender_led()
 {
+  Serial.println("prendiendo led");
   digitalWrite(LEDPin, HIGH); // poner el Pin en HIGH
   tiempo_final = millis() - tiempo_inicial;
-  if (tiempo_final > 50)
+  if (tiempo_final > 500)
   {
     tiempo_inicial = millis();
     return 13;
@@ -351,7 +367,7 @@ int apagar_led()
 {
   digitalWrite(LEDPin, LOW); 
   tiempo_final = millis() - tiempo_inicial;
-  if (tiempo_final > 50)
+  if (tiempo_final > 500)
   {
     tiempo_inicial = millis();
     return 0;
