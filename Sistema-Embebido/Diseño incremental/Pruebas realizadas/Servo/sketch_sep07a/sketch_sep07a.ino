@@ -15,10 +15,10 @@ void setup() {
 void loop() {
   
   // Desplazamos a la posición 0º
-  servoMotor.write(3);
+  servoMotor.write(0);
   // Esperamos 1 segundo
   delay(1000);
-    servoMotor.write(3);
+    servoMotor.write(0);
   // Esperamos 1 segundo
   delay(1000);
   
