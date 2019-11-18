@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_rutina">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.alimentadordeperritos.ui.perfil.PerfilFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_perfil" />
+
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="com.example.alimentadordeperritos.ui.comidas.ComidasFragment"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/fragment_comidas" />
+
+    <fragment
+        android:id="@+id/nav_slideshow"
+        android:name="com.example.alimentadordeperritos.ui.Notificaciones.NotificacionesFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_notificaciones" />
+
+    <fragment
+        android:id="@+id/nav_tools"
+        android:name="com.example.alimentadordeperritos.ui.recargar.RecargarFragment"
+        android:label="@string/menu_tools"
+        tools:layout="@layout/fragment_recargar" />
+    <fragment
+        android:id="@+id/nav_rutina"
+        android:name="com.example.alimentadordeperritos.ui.rutina.RutinaFragment"
+        android:label="Rutina"
+        tools:layout="@layout/rutina_fragment" />
+
+    <!--
+    <fragment
+        android:id="@+id/nav_share"
+        android:name="com.example.alimentadordeperritos.ui.share.ShareFragment"
+        android:label="@string/menu_share"
+        recargar:layout="@layout/fragment_share" />
+
+    <fragment
+        android:id="@+id/nav_send"
+        android:name="com.example.alimentadordeperritos.ui.send.SendFragment"
+        android:label="@string/menu_send"
+        recargar:layout="@layout/fragment_send" />
+    -->
+
+</navigation>

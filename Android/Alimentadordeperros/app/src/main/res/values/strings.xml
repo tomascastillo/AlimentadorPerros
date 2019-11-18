@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">Alimentador de perros</string>
+    <string name="app_name">AlimentadorDePerritos</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">ALIMENTADOR DE PERROS</string>
+    <string name="nav_header_subtitle">M1</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Salir</string>
+
+    <string name="menu_home">Modificar Perfil</string>
+    <string name="menu_gallery">Historial de comidas</string>
+    <string name="menu_slideshow">Historial de notificaciones</string>
+    <string name="menu_tools">Recargar comida</string>
+
 </resources>

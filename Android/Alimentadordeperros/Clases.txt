@@ -1,0 +1,71 @@
+//por cada segundo que abre la compuerta tira 30 gr de comida
+//por cada cambio en la variacion de los sensores pir o balanza el arduino envia la info 
+//tomamos la fecha y hora desde el clock del celu.
+
+Clases
+
+Perfil_perro
+{
+Raza 
+Peso
+NivelDeActividad (bajo,medio,alto)
+Estado(Gordo,Excedido,Bien,Flaco)
+FechaDeNacimiento
+nombre 
+}
+
+Raza
+{
+
+id
+Tamanio (1 a 7)
+Descripcion
+
+}
+
+ComidaProgramada
+{
+
+Cantidad (en gr)
+Horario
+
+}
+
+
+
+Alerta//viene del arduino
+{
+codigo 
+descripcion
+}
+
+Notificacion
+{
+  id
+  FechaHora
+  Alerta
+}
+
+
+DatosArduino
+{
+
+}
+
+Estadisticas//lo que comio el perro + lo que viene del arduino
+
+{
+
+Id
+CantidadConsumida
+FechaHora 
+
+
+}
+
+
+CalcularcomidaConsumida()
+
+Estructura de comunicacion 
+
+01- 
