@@ -2,18 +2,18 @@ package com.example.alimentadordeperritos.bd;
 
 public enum NivelDeActividad
 {
-    BAJO(3),
-    MEDIO(2),
-    ALTO(1);
+    BAJO(0.9),
+    MEDIO(1.0),
+    ALTO(1.1);
 
-    private final int codigoNA;
+    private final double codigoNA;
 
-    private NivelDeActividad(int codigo){
+    private NivelDeActividad(double codigo){
 
         codigoNA = codigo;
     }
 
-    public int getCodigoNA(){
+    public double getCodigoNA(){
         return codigoNA;
     }
 

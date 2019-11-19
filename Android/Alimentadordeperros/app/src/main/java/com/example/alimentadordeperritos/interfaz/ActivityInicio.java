@@ -22,7 +22,10 @@ public class ActivityInicio extends AppCompatActivity {
     public static final int CODIGO_MI_PERFIL=1;
     public static final int CODIGO_PERFILxDEFECTO=2;
 
+
     public Bundle myBundleCargadoDeBd; //Contenedor de info del perfil del perro, el cual se usa para enviar a otra activity
+
+    public boolean soyConfigManual;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,8 @@ public class ActivityInicio extends AppCompatActivity {
             //idPerro= (EditText) findViewById();
 
         ConexionSqlLite con = new ConexionSqlLite(this, "bd_perros", null, 1);
+
+        soyConfigManual=false;
     }
 
     public void cargarPerfilPorDefecto(View view)// evento on click
@@ -41,34 +46,22 @@ public class ActivityInicio extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),"Perfil por defecto cargado!",Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
-        }else
-            Toast.makeText(getApplicationContext(),"Aún no existe un perfil por defecto cargado en bd.",Toast.LENGTH_LONG).show();
-        //INTENT TEMPORAL PARA PRUEBAS
-        Intent intentTemp= new Intent(this,DispositivosBT.class);
-        startActivity(intentTemp);
+        }else {
+            Toast.makeText(getApplicationContext(), "Aún no existe un perfil por defecto cargado en bd.", Toast.LENGTH_LONG).show();
+            //INTENT TEMPORAL PARA PRUEBAS
+            Intent intentTemp = new Intent(this, DispositivosBT.class);
+            myBundleCargadoDeBd = new Bundle();
 
+            soyConfigManual = true;
+
+             myBundleCargadoDeBd.putBoolean("boolean",soyConfigManual);
+
+
+            intentTemp.putExtras(myBundleCargadoDeBd);
+            startActivity(intentTemp);
+        }
     }
-/*
-    private void registrarPerfil()
-    {
-        ConexionSqlLite con = new ConexionSqlLite(this, "bd_perros", null, 1);
 
-        SQLiteDatabase db=con.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(Utilidades.CAMPO_ID,1);
-        values.put(Utilidades.CAMPO_RAZA,"Dogo");
-        values.put(Utilidades.CAMPO_NOMBRE,"Pepe");
-
-
-        Long idResultante = db.insert(Utilidades.TABLA_PERFIL,Utilidades.CAMPO_ID,values); //Se inserta en la bd
-
-
-        Toast.makeText(getApplicationContext(),"id Registrado; "+idResultante,Toast.LENGTH_SHORT).show();
-
-        // String pathDatabase = getDatabasePath("bd_perros.db").getAbsolutePath();
-        //  Toast.makeText(getApplicationContext(),pathDatabase,Toast.LENGTH_SHORT).show();
-        db.close();
-    }*/
 
     public void crearPerfilPersonalizado(View view)
     {

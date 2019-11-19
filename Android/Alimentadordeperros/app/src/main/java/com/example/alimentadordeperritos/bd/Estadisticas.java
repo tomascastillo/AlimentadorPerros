@@ -24,10 +24,10 @@ public class Estadisticas {
         Id_Estadistica = id_Estadistica;
         this.servoTrabado = servoTrabado;
         this.perroComiofueraTiempo = perroComiofueraTiempo;
-        Cantidad_Consumida = cantidad_Consumida;
+        this.Cantidad_Consumida = cantidad_Consumida;
         this.perroComioRapido = perroComioRapido;
         this.comidaDepo = comidaDepo;
-        Fecha_Hora = fecha_Hora;
+        this.Fecha_Hora = fecha_Hora;
     }
 
 
@@ -38,7 +38,7 @@ public class Estadisticas {
     }
 
 
-    public List<Integer> leer_estadistica(String fecha,Context context){
+    public static List<Integer> leer_estadistica(String fecha,Context context){
 
         ConexionSqlLite con = new ConexionSqlLite(context, "bd_perros", null, 1);
         SQLiteDatabase db = con.getReadableDatabase();
@@ -50,7 +50,7 @@ public class Estadisticas {
 
         try {
 
-            Cursor cursor = db.query(Utilidades.TABLA_ESTADISTICAS,campos,Utilidades.FECHA_ESTADISTICA+"=?",parametros,null,null,null); //se realiza la consulta por id
+            Cursor cursor = db.query(Utilidades.TABLA_ESTADISTICAS,campos,Utilidades.FECHA_ESTADISTICA+"=?",parametros,null,null,null);
             //Utilidades.FECHA_ESTADISTICA+"=?",parametros
             /*En cursor se mapean los campos que quiero traer de la bd*/
 

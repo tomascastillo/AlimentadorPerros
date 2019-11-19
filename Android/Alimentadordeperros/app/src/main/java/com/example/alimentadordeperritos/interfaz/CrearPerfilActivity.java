@@ -161,7 +161,6 @@ public class CrearPerfilActivity extends AppCompatActivity {
 
         lista.add("Seleccione");
         lista.add(Estado.BIEN.name());
-        lista.add(Estado.EXCEDIDO.name());
         lista.add(Estado.FLACO.name());
         lista.add(Estado.GORDO.name());
 
@@ -188,22 +187,14 @@ public class CrearPerfilActivity extends AppCompatActivity {
 
            registrarPerfilEnBd(); //guarda el perfil del perro en la bd solo la primera vez
 
+           Intent intent = new Intent(this, DispositivosBT.class);
 
-               Intent intent = new Intent(this, DispositivosBT.class);
-               //Aca antes de iniciar la siguiente actividad se codifica la info que se le quiere enviar.
-      /*  Bundle myBundle = new Bundle();
-        myBundle.putString("nombre",etNombre.getText().toString());
-        myBundle.putString("peso",etPeso.getText().toString());
-        myBundle.putString("raza",razaSeleccionada);
-        myBundle.putString("na",NASeleccionado);
-        myBundle.putString("estado",estadoSeleccionado);
-        myBundle.putString("fnac",dateFnac);
+            //Aca antes de iniciar la siguiente actividad se codifica la info que se le quiere enviar.
+            Bundle myBundle = prepararInfoAEnviar(etNombre.getText().toString(), etPeso.getText().toString(), razaSeleccionada, NASeleccionado, estadoSeleccionado, dateFnac);
+              //SE GUARDA INFO EN EL INTENT
+            intent.putExtras(myBundle);
 
-         intent.putExtras(myBundle);*/
-               //SE GUARDA INFO EN EL INTENT
-               intent.putExtras(prepararInfoAEnviar(etNombre.getText().toString(), etPeso.getText().toString(), razaSeleccionada, NASeleccionado, estadoSeleccionado, dateFnac));
-
-               startActivity(intent); //Una vez que inicia la sig activity, la recepcion de la info la debemos hacer dentro de su metodo onCreate.
+            startActivity(intent); //Una vez que inicia la sig activity, la recepcion de la info la podemos hacer dentro de su metodo onCreate.
 
     }
 

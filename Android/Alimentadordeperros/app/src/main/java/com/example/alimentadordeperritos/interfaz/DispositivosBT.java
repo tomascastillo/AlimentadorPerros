@@ -40,17 +40,17 @@ public class DispositivosBT extends AppCompatActivity {
     private BluetoothAdapter mBtAdapter;
     private ArrayAdapter mPairedDevicesArrayAdapter;
 
-    Bundle myBundle ;
+    private Bundle myBundle; //DECLARO ACA EL BUNDLE PARA DESPUES PODER ENVIAR EL PAQUETE A MainActivity!
+
+    private boolean soyConfigManual;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dispositivos_bt);
 
-        myBundle = this.getIntent().getExtras();
+        myBundle = this.getIntent().getExtras(); //ACA RECIBO EL BUNDLE QUE ME ENVIO CrearPerfilActivity.
 
 
-       // if(recibirPerfil()==TODO_MAL)
-         //   Toast.makeText(getApplicationContext(),"No recibi perfil, te falta programar esta parte.",Toast.LENGTH_LONG).show();
 
     }
 
@@ -103,17 +103,21 @@ public class DispositivosBT extends AppCompatActivity {
 
 
             try {
+                Intent i;
+                soyConfigManual = myBundle.getBoolean("boolean");
+                if(soyConfigManual)
+                     i = new Intent(DispositivosBT.this, TemporalActivity.class);
+                else {
+                    i = new Intent(DispositivosBT.this, MainActivity.class);//<-<- PARTE A MODIFICAR >->->
+
+                    i.putExtras(myBundle); //GUARDO EN EL INTENT EL PERFIL DEL PERRO
+                }
+
+                    i.putExtra(EXTRA_DEVICE_ADDRESS, address); //EN EL PAQUETE QUE TENGO GUARDADO EL PERFIL DEL PERRO, LE AGREGO LA DIRECCION MAC DEL DISPOSITIVO AL CUAL ME QUIERO CONECTAR.
+
+                    startActivity(i);
 
 
-              Intent i = new Intent(DispositivosBT.this, MainActivity.class);//<-<- PARTE A MODIFICAR >->->
-            // i.putExtras(prepararInfoAEnviar(perfilActual.getNombre(), perfilActual.getPeso().toString(),
-           //          perfilActual.getRaza().toString(), perfilActual.getNa(),perfilActual.getEstado(),perfilActual.getFechaNac().toString()));
-
-                i.putExtras(myBundle);
-
-            i.putExtra(EXTRA_DEVICE_ADDRESS, address);
-
-             startActivity(i);
          }catch(RuntimeException e)
          {
              Log.e("<<Error intent >>", e.getMessage());
@@ -122,21 +126,6 @@ public class DispositivosBT extends AppCompatActivity {
     };
 
 
-/*
-    public Bundle prepararInfoAEnviar(String name,String peso,String raza,String na,String estado,String fnac){
-
-        Bundle myBundle = new Bundle();
-        myBundle.putString("nombre",name);
-        myBundle.putString("peso",peso);
-        myBundle.putString("raza",raza);
-        myBundle.putString("na",na);
-        myBundle.putString("estado",estado);
-        myBundle.putString("fnac",fnac);
-
-        return myBundle;
-    }
-
- */
     private void VerificarEstadoBT() {
         // Comprueba que el dispositivo tiene Bluetooth y que está encendido.
         mBtAdapter= BluetoothAdapter.getDefaultAdapter();
@@ -153,43 +142,6 @@ public class DispositivosBT extends AppCompatActivity {
             }
         }
     }
-
-    //RECIBE EL PERFIL DE PERRO DE ActivityInicio
-   /*
-    private int recibirPerfil() {
-
-        Bundle myBundle = this.getIntent().getExtras();
-        String nombre,raza,na,estado,fnac;
-        Integer peso;
-        Date date;
-
-        if(myBundle!=null){
-            nombre = myBundle.getString("nombre");
-            peso = Integer.parseInt(myBundle.getString("peso"));
-            raza = myBundle.getString("raza");
-            na = myBundle.getString("na");
-            estado = myBundle.getString("estado");
-            fnac = myBundle.getString("fnac");
-
-            Toast.makeText(getApplicationContext(),"Recibi info: "+nombre+" "+peso+" "+raza+" "+na+" "+estado+" "+fnac ,Toast.LENGTH_LONG).show();
-
-            SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy");
-            try {
-                date = format.parse(fnac);
-                perfilActual = new PerfilPerro(1,peso,new Raza(raza),na,estado,date,nombre);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-
-
-
-            return TODO_OK;
-        }
-
-        return TODO_MAL;
-    }//recibirPerfil
-*/
 
 }
 

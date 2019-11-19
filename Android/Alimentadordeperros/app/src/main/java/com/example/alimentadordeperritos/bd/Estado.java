@@ -2,19 +2,19 @@ package com.example.alimentadordeperritos.bd;
 
 public enum Estado
 {
-    GORDO(1),
-    EXCEDIDO(2),
-    BIEN(3),
-    FLACO(4);
+    GORDO(0.9),
 
-    private final int codigoEstado;
+    BIEN(1.0),
+    FLACO(1.1);
 
-    private Estado(int codigo)
+    private final double codigoEstado;
+
+    private Estado(double codigo)
     {
         codigoEstado = codigo;
     }
 
-   public int getCodigoEstado(){
+   public double getCodigoEstado(){
         return codigoEstado;
    }
 
