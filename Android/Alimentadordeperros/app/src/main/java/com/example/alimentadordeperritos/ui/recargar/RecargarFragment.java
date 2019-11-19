@@ -6,17 +6,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.alimentadordeperritos.R;
 
+
+
 public class RecargarFragment extends Fragment {
 
     private RecargarViewModel recargarViewModel;
+
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -30,6 +34,11 @@ public class RecargarFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+
         return root;
-    }
-}
+    } //onCreateView
+
+
+
+}//FRAGMENT

@@ -3,7 +3,12 @@ package com.example.alimentadordeperritos.interfaz;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -42,8 +47,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+//IMPORT PARA SENSORES
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     public static final int TODO_OK = 1;
     public static final int TODO_MAL = 0;
@@ -94,9 +101,21 @@ public class MainActivity extends AppCompatActivity {
     // String para la direccion MAC
     private static String address = null;
 
+    private SendToArduinoThread MyConexionBT_send;
+
+    //VARIABLES PARA SENSORES
+    private static final String TAG = "MainActivity";
+
+    private SensorManager sensorManager ;
+    private Sensor acelerometro, proximidad, luz  ;
+    private float   acelVal ;   //CURRENTE ACCELERATION VALUE AND GRAVITY
+    private float   acelLast ;  //LAST ACCELERATION VALUE AND GRAVITY
+    private float   shake ;     //ACCELERATION VALUE differ FROM GRAVITY
+
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)  {
 
         super.onCreate(savedInstanceState);
 
@@ -176,18 +195,18 @@ public class MainActivity extends AppCompatActivity {
             rutinaProg = calcularRutinaProgramada(perfilActual);
 
 
-            prepararCadenayEnviar();
+            prepararCadenayEnviar(); //ENVIA INFO DE ACTIVITY ---> FRAGMENT
 
 
             // set Fragmentclass Arguments
             RutinaFragment fragobj = new RutinaFragment();
             /****************/
 
-
+             /*
             Bundle bundle = new Bundle();
             bundle.putString("valuesArray", "pepeeee");
             fragobj.setArguments(bundle);
-            /**********************/
+            */
             getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, fragobj).commit();
 
         }//else
@@ -228,25 +247,140 @@ public class MainActivity extends AppCompatActivity {
     /*for(Date element: rutinaProg.getHorario()){
      Log.e("------------_>",element.toString());
     }*/
-
+         iniciarSensores(); //ACA INICIO LOS SENSORES
     }//onCreate
+   public void iniciarSensores(){
+       Log.d(TAG,"onCreate: iniciando sensor services");
+
+       // Creamos el objeto para acceder al servicio de sensores
+       sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+       // Iniciando sensores
+       acelerometro = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+       if(acelerometro != null){
+
+           sensorManager.registerListener(MainActivity.this,acelerometro,SensorManager.SENSOR_DELAY_NORMAL);
+           Log.d(TAG,"onCreate: registered acelerometro listener") ;
+
+       }
+       else{
+
+           Toast.makeText(this, "Sensor acelerometro no soportado", Toast.LENGTH_SHORT).show();
+       }
+
+       proximidad = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+       if(proximidad != null){
+
+           sensorManager.registerListener(MainActivity.this,proximidad,SensorManager.SENSOR_DELAY_NORMAL);
+           Log.d(TAG,"onCreate: registered proximidad listener") ;
+
+       }
+       else{
+           Toast.makeText(this, "Sensor de proximidad no soportado", Toast.LENGTH_SHORT).show();
+
+       }
+
+       luz = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+       if(luz != null){
+
+           sensorManager.registerListener(MainActivity.this,luz,SensorManager.SENSOR_DELAY_NORMAL);
+           Log.d(TAG,"onCreate; registered luz listener");
+       }
+       else{
+           Toast.makeText(this, "Sensor de luz no soportado", Toast.LENGTH_SHORT).show();
+       }
+
+       //MAGIA
+       acelVal = SensorManager.GRAVITY_EARTH;
+       acelLast = SensorManager.GRAVITY_EARTH;
+       shake = 0.00f ;
+   }
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
+    }
+
+    // Metodo que escucha el cambio de los sensores
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+
+        Sensor sensor = sensorEvent.sensor;
+
+        // Cada sensor puede lanzar un thread que pase por aqui
+        // Para asegurarnos ante los accesos simultaneos sincronizamos esto
+
+        synchronized (this) {
+
+            switch (sensor.getType()) {
+
+                case Sensor.TYPE_ACCELEROMETER:
+
+                    float x = sensorEvent.values[0] ;
+                    float y = sensorEvent.values[1] ;
+                    float z = sensorEvent.values[2] ;
+
+                    acelLast = acelVal ;
+                    acelVal = (float) Math.sqrt((double) (x*x + y*y + z*z) );
+                    float delta = acelVal - acelLast ;
+                    shake = shake * 0.9f + delta;
+
+                    if(shake > 12){
+
+                        //DO WHAT YOU WANT ****aca se mandaria una "a" por bluetooth****
+                        MyConexionBT_send.write("a");
+                        Toast toast = Toast.makeText(getApplicationContext(),"DO NOT SHAKE ME", Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+
+                    break;
+
+                case Sensor.TYPE_PROXIMITY:
+
+                    if(sensorEvent.values[0]<sensor.getMaximumRange()){
+                        //DO WHAT YOU WANT ****aca se mandaria una "d" por bluetooth****
+                        MyConexionBT_send.write("d");
+                        Toast.makeText(this, "Proximidad activado", Toast.LENGTH_SHORT).show();
+                    }
+
+                    break;
+
+                case Sensor.TYPE_LIGHT:
+         //Toast.makeText(getApplicationContext(),"--> "+sensorEvent.values[0],Toast.LENGTH_LONG).show();
+                    /*luzValue.setText("Luz: "+sensorEvent.values[0]);
+                     */ // si sensorEvent.values[0] == 0 -> no hay luz?
+                    if(sensorEvent.values[0]<2.0/*<sensor.getMaximumRange()*/) {
+                        //DO WHAT YOU WANT ****aca se mandaria una "e" por bluetooth****
+                        MyConexionBT_send.write("e");
+                        Toast.makeText(this, "LUZ", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+
+        }
+
+    }
 
     private void prepararCadenayEnviar() {
         DateFormat dateFormat = new SimpleDateFormat("HH:mm");
         Date diaActual = new Date();
         Calendar fecha_estadistica= Calendar.getInstance();
         String array2 = new String();
+        int cont=1;
 
         for(Date elem : rutinaProg.getHorario()){
             fecha_estadistica.setTime(elem);
 
-            array2 = array2.concat("\n"+ dateFormat.format(fecha_estadistica.getTime()));
+            array2 = array2.concat("\nHorario "+cont+": "+ dateFormat.format(fecha_estadistica.getTime()));
+            cont++;
         }
         //ENVIAR INFO DE ACTIVITY A UN FRAGMENT
 
         rutinaVM = ViewModelProviders.of(this).get(RutinaViewModel.class);
         rutinaVM.init();
-        rutinaVM.sendMessage("ComidaTotalxDia: " + rutinaProg.getCantidadXDia()+ " gramos." + array2  );
+        rutinaVM.sendMessage("ComidaTotalxDia: " + rutinaProg.getCantidadXDia()+ " gr.\n" + "ComidaxRacion: " + rutinaProg.getCantidadxRacion()+" gr.\n" + array2  );
     }
 
     private void parsearCadenaDeArduino(String dataInPrint) {
@@ -309,8 +443,6 @@ public class MainActivity extends AppCompatActivity {
         //FORMULAS
         /* ComidaTotalxDia = (300 * Raza * estado) / na * edad */
 
-        /* ComidaxRacion = ComidaTotalxDia / edad */
-
         /* CantidadAperturas = ComidaxRacion / 30 gr */
 
         //DECLARACIONES
@@ -341,34 +473,74 @@ public class MainActivity extends AppCompatActivity {
         //CALCULO ComidaTotalxDia
         int edadD = calcularReferenteEdad(edad); //CALCULA LA EDAD DE LA DOSIS EN BASE A LA EDAD DEL PERRO
 
-        double resxDia = (360 * codigoTamanioRaza * codigoEstado) / (codigoNA * edadD); //FORMULA
+        double resxDia = (360 * codigoTamanioRaza * codigoEstado) / (codigoNA * edadD); //FORMULA, CALCULA LA CANTIDAD DE COMIDA EN GRAMOS X DIA
+
+
+        //GET CantRaciones
+        int cantRaciones = obtenerCantRaciones(codigoTamanioRaza,edadD);
 
         //CALCULO ComidaxRacion
-        double resxRacion = resxDia / edad;
+        double resxRacion = resxDia / cantRaciones; // CALCULA LA CANTIDAD DE COMIDA EN GRAMOS X RACION
+
 
         //CALCULO Horarios
         List<Date> horarios = new ArrayList<Date>();
-        int cantRaciones = 3;//TEMPORAL, COMO SE CALCULA?
 
         int intervaloTiempo = 24 / cantRaciones;
 
         DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-        Date horaActual = new Date();
-        System.out.println("Hora actual: " + dateFormat.format(horaActual));
+        Date horaBase = new Date();
+        horaBase.setHours(0);
+        horaBase.setMinutes(0);
+        horaBase.setSeconds(0);
+        //System.out.println("Hora actual: " + dateFormat.format(horaActual));
 
         //CREO UN OBJETO CALENDAR PARA SUMAR HORAS!
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(horaActual); //recibe un Date;
+        calendar.setTime(horaBase); //recibe un Date;
 
 
         for (int i = 0; i < cantRaciones; i++) {
             calendar.add(Calendar.HOUR, intervaloTiempo); //horasASumar es int.
+
+            if(i == cantRaciones-1)
+                calendar.add(Calendar.MINUTE,-5);
+
             horarios.add(calendar.getTime());
         }
+
+
         return new RutinaProgramada(resxRacion, resxDia, horarios);
     }
 
-  public Date obtenerHorarioActual(String formato){
+    private int obtenerCantRaciones(int codigoTamanioRaza, int edadD) {
+
+        if (codigoTamanioRaza == 1 && edadD == 4)
+            return 3;
+        if (codigoTamanioRaza == 1 && edadD == 3)
+            return 2;
+        if (codigoTamanioRaza == 1 && edadD == 2)
+            return 3;
+
+        if (codigoTamanioRaza == 2 && edadD == 4)
+            return 2;
+        if (codigoTamanioRaza == 2 && edadD == 3)
+            return 4;
+        if (codigoTamanioRaza == 2 && edadD == 2)
+            return 4;
+
+        if (codigoTamanioRaza == 3 && edadD == 4)
+            return 3;
+        if (codigoTamanioRaza == 3 && edadD == 3)
+            return 6;
+
+
+            return 6;  //Ese return 6 es para ---> if (codigoTamanioRaza == 3 && edadD == 2)
+
+    }
+
+
+    public Date obtenerHorarioActual(String formato){
 
       DateFormat dateFormat = new SimpleDateFormat(formato);
       Date horaActual = new Date();
@@ -569,7 +741,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         MyConexionBT = new ConnectedThread(btSocket);
-        MyConexionBT.start();
+        MyConexionBT.start(); //Ejecuta el hilo para recibir info de arduino
+
+        MyConexionBT_send = new SendToArduinoThread((btSocket));
+        MyConexionBT_send.start(); //Ejecuta el hilo para enviar info a arduino
     }
 
     @Override
@@ -644,12 +819,12 @@ public class MainActivity extends AppCompatActivity {
 
     } //Clase ConnectedThread extends
 
-    public class sendToArduinoThread extends Thread {
+    public class SendToArduinoThread extends Thread {
 
         private final InputStream mmInStream;
         private final OutputStream mmOutStream;
 
-        public sendToArduinoThread(BluetoothSocket socket) {
+        public SendToArduinoThread(BluetoothSocket socket) {
             InputStream tmpIn = null;
             OutputStream tmpOut = null;
             try {
@@ -679,35 +854,38 @@ public class MainActivity extends AppCompatActivity {
          DateFormat dateFormat = new SimpleDateFormat("HH:mm");
          Date horaActual;
 
+         String strHoraActual, iHorarioRutina;
+
          while(true){
+         try {
+             horaActual = new Date();
+              strHoraActual = ConvertirHorarioDateToString(horaActual);
+              iHorarioRutina = ConvertirHorarioDateToString(rutinaProg.getHorario().get(i));
 
-             horaActual =  new Date();
+             if (strHoraActual.equals(iHorarioRutina)) //ACA COMPARO STRINGS
+             {
 
-        if(ConvertirHorario(horaActual).equals(ConvertirHorario(rutinaProg.getHorario().get(i)))){
+                 String cantAperturas = retornarClaveArduino(rutinaProg.getCantidadxRacion() / 30);
 
-            String cantAperturas = retornarClaveArduino(rutinaProg.getCantidadxRacion()/30);
+                 MyConexionBT_send.write(cantAperturas);
 
-            MyConexionBT.write(cantAperturas);
-
-            i++;
-        }
-             SimpleDateFormat sdfa = new SimpleDateFormat("HH:mm");
-
-             Date horaTurbiaFeliz = new Date(Date.parse("00:00"));
-
-
-             if(obtenerHorarioActual("HH:mm").compareTo(horaTurbiaFeliz) == 0 ){
-                 i=0;
-                 Calendar fecha_estadistica= Calendar.getInstance();
+                 i++;
+             }
+             //Date horaTurbiaFeliz = new Date(Date.parse("00:00"));
+             if (strHoraActual.equals("00:00")) {
+                 i = 0;
+                 Calendar fecha_estadistica = Calendar.getInstance();
                  fecha_estadistica.setTime(obtenerHorarioActual("dd/MM/yyyy"));
                  fecha_estadistica.add(Calendar.DAY_OF_YEAR, -1); //horasASumar es int.
-                 List<Integer> arrayComioRapido = Estadisticas.leer_estadistica(dateFormat.format(fecha_estadistica.getTime()),getApplicationContext());
+                 List<Integer> arrayComioRapido = Estadisticas.leer_estadistica(dateFormat.format(fecha_estadistica.getTime()), getApplicationContext());
                  rutinaProg.recalcularRutina(arrayComioRapido);
                  prepararCadenayEnviar();
              }
-
-      }//while
-    }
+             }catch (Exception e){
+                  break;
+                 }//catch
+         }//while
+    }//run
 
         public void write(String input) {
             byte msgBytes[] = input.getBytes();
@@ -716,30 +894,29 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e) {
                 //si no es posible enviar datos se cierra la conexión
                 Toast.makeText(getBaseContext(), "La Conexión fallo", Toast.LENGTH_LONG).show();
-                finish();
+                //finish();
             }
         }
   }
 
-    public String ConvertirHorario(Date date)
+    public String ConvertirHorarioDateToString(Date date)
     {
 
         DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-        Date diaActual = date;
-        Calendar hora= Calendar.getInstance();
-        hora.setTime(diaActual);
+        Calendar hora = Calendar.getInstance();
+        hora.setTime(date);
 
         return dateFormat.format(hora.getTime());
     }
 
     public String retornarClaveArduino(double valor){
-        int auxiliar = (int) valor;
-        String pan="puto";
+        int auxiliar = (int) Math.round(valor); //metodo para redondear un double a un int
+        String pan="a";
         switch(auxiliar){
 
-            case 1: pan = "a";
-            case 2: pan = "b";
-            case 3: pan = "c";
+            case 1: pan = "a"; break;
+            case 2: pan = "b"; break;
+            case 3: pan = "c"; break;
         }
        return pan;
     }

@@ -43,11 +43,11 @@ public class ActivityInicio extends AppCompatActivity {
     public void cargarPerfilPorDefecto(View view)// evento on click
     {
         if(cargarPerfil(CODIGO_PERFILxDEFECTO)==TODO_OK){
-        Toast.makeText(getApplicationContext(),"Perfil por defecto cargado!",Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),"Perfil por defecto cargado!",Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
         }else {
-            Toast.makeText(getApplicationContext(), "Aún no existe un perfil por defecto cargado en bd.", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "Aún no existe un perfil por defecto cargado en bd.", Toast.LENGTH_LONG).show();
             //INTENT TEMPORAL PARA PRUEBAS
             Intent intentTemp = new Intent(this, DispositivosBT.class);
             myBundleCargadoDeBd = new Bundle();
