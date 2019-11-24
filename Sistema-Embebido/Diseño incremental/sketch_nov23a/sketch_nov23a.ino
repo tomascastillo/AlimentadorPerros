@@ -5,28 +5,6 @@
 
 #define DOUT A1
 #define CLK A0
-#define ESTADO_INCIAL 0
-#define CHEQUEO_ULTIMAS_COMIDAS 1
-#define CHEQUEO_PESO_INICIAL 2
-#define ABRIR_SERVO_1 3
-#define CERRAR_SERVO_1 4
-#define ABRIR_SERVO_2 5
-#define CERRAR_SERVO_2 6
-#define ABRIR_SERVO_3 7
-#define CERRAR_SERVO_3 8
-#define MEDIR_PESO_ALIMENTADOR_INICIAL 9
-#define CHEQUEAR_SERVO_TRABADO_1 10
-#define CHEQUEAR_SERVO_TRABADO_2 11
-#define CHEQUEAR_PRESENCIA 12
-#define PRENDER_BUZZER 13
-#define APAGAR_BUZZER 14
-#define CHEQUEAR_RESTOS_COMIDA 15
-#define MEDIR_DEPOSITO 16
-#define PRENDER_LED 17
-#define APAGAR_LED 18
-#define DETECTAR_PERRO_HUSMEANDO 19
-#define MANDAR_DATOS 20
-
 HX711 balanza(DOUT, CLK);
 Servo servoMotor;
 SoftwareSerial mySerial(10, 9); //rx,tx
@@ -57,7 +35,6 @@ String cadena_a_enviar = "";
 int tiempo_inicial_mandar_datos = 0;
 int tiempo_final_mandar_datos = 0;
 int lectura_peso_inicial_comida_agregada = 0;
-int contador_mandar_datos=0;
 
 void setup()
 {
@@ -86,92 +63,114 @@ void loop()
     //diagrama de estados
     
     switch (operacion_general)
-    {
+    {/*
+      ESTADO INICIAL: LEER BLUETOOTH Y CHEQUEOS 1 Y 2
+      ALIMENTANDO: ABRIR SERVO
+      POST ALIMENTO: TODO LO DEMAS HASTA LO DEL ULTRASONIDO
+      ESTADO FINAL: ULTRASONIDO Y 
+      
+      
+      
+      */
+      /*
     case ESTADO_INCIAL:
+        switch(evento)
+        {
+          case LEER_BLUETOOTH:
+          proximo_estado(ESPERANDO_DESPACHO_COMIDA);
+          break;
+          deafult:
+          break;
+        }
+        break;
+    case ALIMENTANDO:
+      switch(evento)
+      {
+        
+      }*/
         operacion_general = leer_bluetooth();//obtengo datos de la app
         tiempo_inicial = millis();
-        tiempo_inicial_mandar_datos = millis();
         break;
-    case CHEQUEO_ULTIMAS_COMIDAS:
+    case 1:
         operacion_general = chequear_vector_ultimas_comidas();//chequeo que el perro no haya comido rapido las ultimas 3 veces que comio, 
         //en ese caso, solo se abrira una vez el servo
         break;
-    case CHEQUEO_PESO_INICIAL:
+    case 2:
         operacion_general = chequear_peso_inicial_comida_agregada();//chequeo que nadie le haya agregado comida al plato,
         //en ese caso, solo se abrira 1 vez el servo
         tiempo_inicial = millis();
         tiempo_inicial_mandar_datos = millis();
         break;
-    case ABRIR_SERVO_1:
+    case 3:
         operacion_general = abrir_servo_1_vez();//primera apertura del servo
         break;
 
-    case CERRAR_SERVO_1:
+    case 4:
         operacion_general = cerrar_servo_1_vez();
         break;
 
-    case ABRIR_SERVO_2:
+    case 5:
         operacion_general = abrir_servo_2_veces();//segunda apertura del servo
         break;
 
-    case CERRAR_SERVO_2:
+    case 6:
         operacion_general = cerrar_servo_2_veces();
         break;
 
-    case ABRIR_SERVO_3:
+    case 7:
         operacion_general = abrir_servo_3_veces();//tercer apertura del servo
         break;
 
-    case CERRAR_SERVO_3:
+    case 8:
         operacion_general = cerrar_servo_3_veces();
         break;
 
-    case MEDIR_PESO_ALIMENTADOR_INICIAL:
+    case 9:
         operacion_general = medir_peso_inicial();//mide el peso de la comida largada por el servo
         break;
 
-    case CHEQUEAR_SERVO_TRABADO_1:
+    case 10:
         operacion_general = chequear_servo_primer_chequeo();//chequea que el servo no haya quedado trabado (son 2 funciones distintas para comparar valores)
 
-    case CHEQUEAR_SERVO_TRABADO_2:
+    case 11:
         operacion_general = chequear_servo_segundo_chequeo();
 
-    case CHEQUEAR_PRESENCIA:
+    case 12:
         operacion_general = detectar_presencia_y_alertar();//con el pir detecta si el perro esta, en ese caso se fija la balanza
         //a ver si comio rapido, y en ese caso activa el buzzer
         break;
 
-    case PRENDER_BUZZER:
+    case 13:
         operacion_general = prender_buzzer();
         break;
 
-    case APAGAR_BUZZER:
+    case 14:
         operacion_general = apagar_buzzer();
         break;
 
-    case CHEQUEAR_RESTOS_COMIDA:
+    case 15:
         operacion_general = chequear_restos_comida();//verifica si quedo comida despues de que el perro haya comido
         break;
 
-    case MEDIR_DEPOSITO:
+    case 16:
         operacion_general = medir_cantidad_en_deposito_y_alertar();//veriifca con el ultrasonido la cantidad de comida en el deposito
         //si hay poca comida prende el led
         break;
 
-    case PRENDER_LED:
+    case 17:
         operacion_general = prender_led();
         break;
 
-    case APAGAR_LED:
+    case 18:
         operacion_general = apagar_led();
         break;
 
-    case DETECTAR_PERRO_HUSMEANDO:
+    case 19:
         operacion_general = detectar_perro_husmeando();//verifica que el perro no este husmeando, en ese caso,
         //compara el peso de la balanza actual contra el peso de los restos de comida, y envia los datos
         break;
 
-    case MANDAR_DATOS:
+    case 20:
         operacion_general = mandar_datos();//manda datos a la app cada 10 min
         break;
 
@@ -182,8 +181,8 @@ void loop()
 }
 int mandar_datos() 
 {                  //bandera mandar datos
-    char cadena_convertida[10] = "";
-    cadena_a_enviar = "";
+    char cadena_convertida[10] = " ";
+    cadena_a_enviar = " ";
 
     itoa(servo_trabado_mandar_datos, cadena_convertida, 10);
     cadena_a_enviar = cadena_a_enviar + cadena_convertida + "|";//Primer campo: si el servo esta trabado
@@ -232,20 +231,10 @@ int detectar_perro_husmeando()
         }
     }
     tiempo_final_mandar_datos = millis() - tiempo_inicial_mandar_datos;
-    if (tiempo_final_mandar_datos > 2000/*) 600000*/) //10 min
+    if (tiempo_final_mandar_datos > /*2000)*/ 600000) //10 min
     {
-        contador_mandar_datos++;
-
         tiempo_inicial_mandar_datos = millis();
-        if(contador_mandar_datos==3)
-        {
-          return 20;
-  
-        }
-        else
-        {
-          return 0;
-        }
+        return 20;
     }
     return 0;
 }
