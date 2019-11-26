@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         //recibir info
         if (recibirPerfil() == TODO_MAL) {//ACA RECIBO EL PERFIL CREADO EN ActivtyInicio
-            //Toast.makeText(getApplicationContext(), "No recibi perfil, te falta programar esta parte.", Toast.LENGTH_LONG).show();
+
             rutinaProg = rutinaHarcodeada(30, 4);
         }
         else {
@@ -186,54 +186,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         RutinaFragment fragobj = new RutinaFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, fragobj).commit();
 
-/*
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Date diaActual = new Date();
-        Calendar fecha_estadistica= Calendar.getInstance();
-        fecha_estadistica.setTime(diaActual);
 
-        Log.d("fecha antes de restar",dateFormat.format(fecha_estadistica.getTime()));
-        fecha_estadistica.add(Calendar.DAY_OF_YEAR, -1); //horasASumar es int.
-        Log.d("fecha Despues de restar",dateFormat.format(fecha_estadistica.getTime()));
-
-        dateFormat.format(fecha_estadistica.getTime());
-
-
-        Date currentTime = Calendar.getInstance().getTime();
-
-        Estadisticas e = new Estadisticas(23,1,0,35,1,500,dateFormat.format(fecha_estadistica.getTime()));
-
-       Long l= e.insertar_estadistica(getApplicationContext());
-       // Toast.makeText(getApplicationContext(),l.toString()+"",Toast.LENGTH_LONG).show();
-/*
-        List<Integer> vec= new ArrayList<Integer>();
-
-        vec =e.leer_estadistica(dateFormat.format(fecha_estadistica.getTime()),getApplicationContext());
-
-        for ( Integer v:vec) {
-            //Toast.makeText(getApplicationContext(),v.toString(),Toast.LENGTH_LONG).show();
-            Log.d("MUESTRA CAMPOS",v.toString() );
-        } */
-
-        //------------------>PRUEBA PARSEAR CADENA DE ARDUINO
-        //  parsearCadenaDeArduino("0|1|0|31|400");
-    /*for(Date element: rutinaProg.getHorario()){
-     Log.e("------------_>",element.toString());
-    }*/
          iniciarSensores(); //ACA INICIO LOS SENSORES
 
-        //CODIGO PARA AGREGAR ESTADISTICAS A LA BD
-        /*DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Date diaActual = new Date();
-        Calendar fecha_estadistica= Calendar.getInstance();
-        fecha_estadistica.setTime(diaActual);
-        fecha_estadistica.add(Calendar.DAY_OF_YEAR, -1);
-
-        Estadisticas e = new Estadisticas(23,1,0,35,1,500,dateFormat.format(fecha_estadistica.getTime()));
-
-         e.insertar_estadistica(getApplicationContext());
-        e.insertar_estadistica(getApplicationContext());
-        e.insertar_estadistica(getApplicationContext());*/
     }//onCreate
 
     private RutinaProgramada rutinaHarcodeada(int cantXRacion,int cantRaciones)
@@ -357,9 +312,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     break;
 
                 case Sensor.TYPE_LIGHT:
-         //Toast.makeText(getApplicationContext(),"--> "+sensorEvent.values[0],Toast.LENGTH_LONG).show();
-                    /*luzValue.setText("Luz: "+sensorEvent.values[0]);
-                     */ // si sensorEvent.values[0] == 0 -> no hay luz?
+                     // si sensorEvent.values[0] == 0 -> no hay luz
                     if(sensorEvent.values[0]<2.0/*<sensor.getMaximumRange()*/) {
                         //DO WHAT YOU WANT ****aca se mandaria una "e" por bluetooth****
                         MyConexionBT_send.write("e");
@@ -477,10 +430,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if (codigoEstado == -1 || codigoNA == -1 || codigoTamanioRaza == -1 || year == -1 || month == -1 || day == -1 || edad == -1)
             return new RutinaProgramada(-1, -1, null); //Error en las conversiones
 
-        //CONTROL DIVISION POR CERO
-        if ((codigoNA * edad) == 0)
-            return new RutinaProgramada(-2, -2, null); //Error division por cero!
-
         //CALCULO ComidaTotalxDia
         int edadD = calcularReferenteEdad(edad); //CALCULA LA EDAD DE LA DOSIS EN BASE A LA EDAD DEL PERRO
 
@@ -504,7 +453,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         horaBase.setHours(0);
         horaBase.setMinutes(0);
         horaBase.setSeconds(0);
-        //System.out.println("Hora actual: " + dateFormat.format(horaActual));
+
 
         //CREO UN OBJETO CALENDAR PARA SUMAR HORAS!
         Calendar calendar = Calendar.getInstance();
@@ -553,7 +502,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     public Date obtenerHorarioActual(){
 
-      //DateFormat dateFormat = new SimpleDateFormat(formato);
       Date horaActual = new Date();
 
        return horaActual;
@@ -623,49 +571,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }//recibirPerfil
 
 
-
-     /*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==REQUEST_ENABLE_BLUETOOTH)
-        {
-            if(resultCode==RESULT_OK)
-            {
-                Toast.makeText(getApplicationContext(),"Bluetooth Activado",Toast.LENGTH_LONG).show();
-
-            }else if(resultCode==RESULT_CANCELED)
-            {
-                Toast.makeText(getApplicationContext(),"Fue cancelada la activacion del Bluetooth.La app no funcionara",Toast.LENGTH_LONG).show();
-                ACTIVAR_MENU=false;
-
-            }
-        }
-    }
-
-
-    private boolean bluetoothONMethod() {
-        if (myBluetoothAdapter == null)
-        {
-            Toast.makeText(getApplicationContext(),"Bluetooth no es soportado por este dispositivo. La app dejo se ejecutarse",Toast.LENGTH_LONG).show();
-            finishAffinity();
-
-        }
-        else
-        {
-            if(!myBluetoothAdapter.isEnabled())
-            {
-                btEnablingIntent=new Intent (BluetoothAdapter.ACTION_REQUEST_ENABLE);
-
-                startActivityForResult(btEnablingIntent,REQUEST_ENABLE_BLUETOOTH); //Este metodo invoca a onActivityResult?
-
-            }
-
-        }
-        return true;
-    }
-*/ // reemplazado por el codigo de temporal activity
-
     //ESTOS 2 METODOS SE CREAN POR DEFECTO AL ELEGIR LA ACTIVITY CON NAVIGATION DRAWER
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -686,31 +591,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         //}
         // return false;
     }
-    /*
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item){
-      return true;
-    }*/
 
-    /*
-        public void salir(View view)
-        {
-            //finish();
-            Toast.makeText(getApplicationContext(),"saliendo...",Toast.LENGTH_LONG).show();
-
-        }
-
-     */
     public void onBackPressed() {
-        // Toast.makeText(getApplicationContext(),"No se puede ",Toast.LENGTH_LONG).show();
-        //System.exit(0);
 
         finishAffinity(); //SIRVE PARA FINALIZAR LA APP DESDE CUALQUIER ACTIVITY
-
     }
-
-//codigo de temporal activity
 
 
     private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
@@ -787,18 +672,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private class ReceiveFromArduinoThread extends Thread {
 
         private final InputStream mmInStream;
-        //private final OutputStream mmOutStream;
+
 
         public ReceiveFromArduinoThread(BluetoothSocket socket) {
             InputStream tmpIn = null;
-            //OutputStream tmpOut = null;
+
             try {
                 tmpIn = socket.getInputStream();
-                //tmpOut = socket.getOutputStream();
+
             } catch (IOException e) {
             }
             mmInStream = tmpIn;
-            //mmOutStream = tmpOut;
+
         }
 
         public void run() {
@@ -818,45 +703,28 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         }
 
-        /*
-        public void write(String input) {
-            byte msgBytes[] = input.getBytes();
-            try {
-                mmOutStream.write(msgBytes);
-            } catch (IOException e) {
-                //si no es posible enviar datos se cierra la conexión
-                Toast.makeText(getBaseContext(), "La Conexión fallo", Toast.LENGTH_LONG).show();
-                finish();
-            }
-        } */
-
     }
       //HILO QUE ENVIA INFO A ARDUINO
     public class SendToArduinoThread extends Thread {
 
-        //private final InputStream mmInStream;
+
         private final OutputStream mmOutStream;
 
         public SendToArduinoThread(BluetoothSocket socket) {
-            //InputStream tmpIn = null;
+
             OutputStream tmpOut = null;
             try {
-                //tmpIn = socket.getInputStream();
+
                 tmpOut = socket.getOutputStream();
             } catch (IOException e) {
             }
-           // mmInStream = tmpIn;
+
             mmOutStream = tmpOut;
         }
 
      public void run(){
          int i=0;
 
-         //NO OLVIDAR RECORRER ARRAY DE HORARIOS Y SETEAR EL I
-
-
-
-         //if (date1.compareTo(date2) > 0)
              for(int j=0 ; j<rutinaProg.getHorario().size() ; j++){
 
              if(rutinaProg.getHorario().get(j).compareTo(obtenerHorarioActual())>0)
@@ -879,7 +747,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
              if (strHoraActual.equals(iHorarioRutina)) //ACA COMPARO STRINGS
              {
 
-                 String cantAperturas = retornarClaveArduino(rutinaProg.getCantidadxRacion() / 30);
+                 String cantAperturas = retornarClaveArduino(rutinaProg.getCantidadxRacion() / 30); //ACA se le envia como parametro "cantidadAperturas = gramosXRacion / 30 gramos"
 
                  MyConexionBT_send.write(cantAperturas);
 
@@ -895,9 +763,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
                  if(arrayComioRapido.size()!=0) {
                      rutinaProg.recalcularRutina(arrayComioRapido);
-                     /*prepararCadenayEnviarAFragment();
-                     RutinaFragment fragobj = new RutinaFragment();
-                     getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, fragobj).commit();*/
+
                      updateCadenaySendtoFragment();
                  }
                  banderaHoraCero=false;

@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".interfaz.ActivityInicio">
+    tools:context=".interfaz.ActivityInicio"
+    android:background="@android:color/darker_gray">
 
     <Button
         android:id="@+id/PerfilXDefecto"
@@ -13,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
         android:onClick="cargarPerfilPorDefecto"
-        android:text="Configuración manual"
+        android:text="Cargar perfil por defecto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

@@ -33,9 +33,4 @@
         tools:layout_editor_absoluteX="126dp"
         tools:layout_editor_absoluteY="173dp" />
 
-    <ListView
-        android:id="@+id/listViewHorarios"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
 </LinearLayout>

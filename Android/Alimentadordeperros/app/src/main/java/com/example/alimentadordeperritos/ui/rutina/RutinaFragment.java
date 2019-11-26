@@ -21,8 +21,6 @@ public class RutinaFragment extends Fragment {
 
     private TextView tvRES;
 
-    private ListView listaHorarios;
-
     private String cadenaRutina="";
 
 
@@ -40,43 +38,8 @@ public class RutinaFragment extends Fragment {
             }
         });
 
-        //String res = "defecto";
-
-              //res  = this.getArguments().getString("abc");
-
-
                   //ACA agrego codigo para vistas del fragment
                   tvRES = (TextView) root.findViewById(R.id.textViewRES);//ADD
-                  //tvRES.setText("El resultado es: " + res);
-                  listaHorarios = (ListView) root.findViewById(R.id.listViewHorarios);
-/*
-                  ArrayList<String> array = new ArrayList<>();
-                  array.add("Horario1");
-                  array.add("Horario2");
-                  array.add("Horario3");*/
-
-        //ArrayList<String> array = getArguments().getStringArrayList("valuesArray");
-
-                //  Bundle b = getArguments().getString("valuesArray");
-
-        //Bundle b= new Bundle(); b.putStringArray("arrayname that use to retrive in frag2",StringArrayObject); Frag2.setArguments(b);
-              /*   try{
-                     //String str = getArguments().getString("valuesArray");
-                     //String str = getArguments().getParcelable(getActivity().getResources().getString());
-                     Log.d("MOSTRAR!!!!!!!","-------->"+str);
-
-
-                 }catch (Exception e){
-                     Log.d("---------------->", e.getMessage());
-                 }*/
-
-
-        //ArrayAdapter<String> adapter = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,array);
-        //listaHorarios.setAdapter(adapter);
-
-
-
-        //tvRES.setText(cadenaRutina);
 
 
         return root;
@@ -101,7 +64,7 @@ public class RutinaFragment extends Fragment {
             @Override
             public void onChanged(String s) {
                 tvRES.setText(s);
-                //Toast.makeText(getContext(),"ACA: "+s,Toast.LENGTH_LONG).show();
+
             }
         });
     }
