@@ -76,7 +76,6 @@ Ademas en la misma pantalla el usuario puede visualizar la rutina programada por
 * Sensor de ultrasonido. Detecta el nivel de alimento en el depósito.
 * Sensor PIR. Detecta la presencia de la mascota cuando la misma se encuentra a X cm de distancia (o cercana) del plato de comida.
 
-## Reloj RTC. Permite programar los eventos para la descarga de comida y alertas acerca del comportamiento de la mascota.
 
 
 Que lógica tiene el sistema completo. Como es el
