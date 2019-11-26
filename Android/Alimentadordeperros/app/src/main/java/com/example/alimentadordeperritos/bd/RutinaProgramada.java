@@ -58,8 +58,9 @@ public class RutinaProgramada {
 
 
     }
-    public void insertarHorarios(int cantRaciones){
-    //CALCULO Horarios
+    public void insertarHorarios(int cantRaciones)
+    {
+        //CALCULO Horarios
     List<Date> horarios = new ArrayList<Date>();
     //int cantRaciones = 3;//TEMPORAL, COMO SE CALCULA?
 
@@ -76,9 +77,15 @@ public class RutinaProgramada {
 
         for (int i = 0; i < cantRaciones; i++) {
             calendar.add(Calendar.HOUR, intervaloTiempo); //horasASumar es int.
+
+            if(i == cantRaciones-1) //si es la ultima hora programada, entonces se le resta 5 minutos.
+                calendar.add(Calendar.MINUTE,-5);
+
             horarios.add(calendar.getTime());
         }
 
         this.setHorario(horarios);
+
+
     }
 }

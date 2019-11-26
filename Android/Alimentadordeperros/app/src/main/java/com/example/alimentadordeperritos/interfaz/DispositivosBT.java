@@ -48,7 +48,7 @@ public class DispositivosBT extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dispositivos_bt);
 
-        myBundle = this.getIntent().getExtras(); //ACA RECIBO EL BUNDLE QUE ME ENVIO CrearPerfilActivity.
+        myBundle = this.getIntent().getExtras();
 
 
 
@@ -98,20 +98,20 @@ public class DispositivosBT extends AppCompatActivity {
 
                 // Realiza un intent para iniciar la siguiente actividad
             // mientras toma un EXTRA_DEVICE_ADDRESS que es la dirección MAC.
-            //Intent i = new Intent(DispositivosBT.this, TemporalActivity.class);//<-<- PARTE A MODIFICAR >->->
-
-
 
             try {
                 Intent i;
-                soyConfigManual = myBundle.getBoolean("boolean");
-                if(soyConfigManual)
-                     i = new Intent(DispositivosBT.this, TemporalActivity.class);
-                else {
-                    i = new Intent(DispositivosBT.this, MainActivity.class);//<-<- PARTE A MODIFICAR >->->
+                //soyConfigManual = myBundle.getBoolean("boolean");
+                //if(soyConfigManual)
+                //     i = new Intent(DispositivosBT.this, MainActivity.class);//iba temporal activity
+                //else {
+                    i = new Intent(DispositivosBT.this, MainActivity.class);
 
                     i.putExtras(myBundle); //GUARDO EN EL INTENT EL PERFIL DEL PERRO
-                }
+                //}
+
+
+                    i.putExtras(myBundle); //prueba borrar si crashea
 
                     i.putExtra(EXTRA_DEVICE_ADDRESS, address); //EN EL PAQUETE QUE TENGO GUARDADO EL PERFIL DEL PERRO, LE AGREGO LA DIRECCION MAC DEL DISPOSITIVO AL CUAL ME QUIERO CONECTAR.
 

@@ -21,6 +21,7 @@
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_notificaciones"
             android:title="Historial de Notificaciones" />
+
         <item
             android:id="@+id/nav_tools"
             android:icon="@drawable/ic_menu_recargar"

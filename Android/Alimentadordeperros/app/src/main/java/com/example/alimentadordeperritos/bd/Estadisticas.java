@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,13 +52,9 @@ public class Estadisticas {
         try {
 
             Cursor cursor = db.query(Utilidades.TABLA_ESTADISTICAS,campos,Utilidades.FECHA_ESTADISTICA+"=?",parametros,null,null,null);
-            //Utilidades.FECHA_ESTADISTICA+"=?",parametros
             /*En cursor se mapean los campos que quiero traer de la bd*/
 
-          //  Toast.makeText(context, ,Toast.LENGTH_LONG).show();
 
-
-          //  myBundleCargadoDeBd = prepararInfoAEnviar(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5));
             if (cursor.moveToFirst()) {
                 //Recorremos el cursor hasta que no haya más registros
                 do {
@@ -75,32 +72,11 @@ public class Estadisticas {
         db.close();
 
         return lista;
-       /*
-
-        Cursor c = db.rawQuery("SELECT "+ Utilidades.PERRO_COMIO_FUERA_TIEMPO + " from estadisticas WHERE Fecha_Estadistica =" +d ,null);
-
-        if (c != null){
-            c.moveToFirst();
-            do{
-                vector.add(c.getColumnIndex("perro_comio_fuera_tiempo"));
-
-            } while(c.moveToNext());
-            }
-            c.close();
-            db.close();
-
-            return vector;
-
-        */
         }
 
       public Long insertar_estadistica(Context context){
             ConexionSqlLite con = new ConexionSqlLite(context, "bd_perros", null, 1);
     SQLiteDatabase db = con.getWritableDatabase();
-         //    String[] parametros;
-    /* String[] campos = (Utilidades.ID_ESTADISTICA,Utilidades.SERVO_TRABADO,Utilidades.PERRO_COMIO_FUERA_TIEMPO);*/
-
-    //db.execSQL("INSERT INTO estadisticas (id_estadistica,servo_trabado,perro_comio_fuera_tiempo,cantidad_consumida,comida_depo,fecha_estadistica,perro_comio_rapido) VALUES (" + this.getId_Estadistica() + "," + this.getServoTrabado() + "," + this.getPerroComiofueraTiempo() + "," + this.getCantidad_Consumida() + "," + this.getComidaDepo() + "," + this.getFecha_Hora() + "," + this.getPerroComioRapido());
           ContentValues cv= new ContentValues();
           cv.put(Utilidades.ID_ESTADISTICA,this.Id_Estadistica);
           cv.put(Utilidades.SERVO_TRABADO,this.servoTrabado);
@@ -112,8 +88,7 @@ public class Estadisticas {
 
           Long idResultante = db.insert(Utilidades.TABLA_ESTADISTICAS,Utilidades.ID_ESTADISTICA,cv);
 
-          //Toast.makeText(context,"id Registrado; "+idResultante,Toast.LENGTH_SHORT).show();
-
+          Toast.makeText(context,"ID RESULTANTE ESTADISTICA:" + idResultante,Toast.LENGTH_LONG).show();
           db.close();
           return idResultante;
         }

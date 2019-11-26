@@ -45,7 +45,9 @@ public class CrearPerfilActivity extends AppCompatActivity {
     private static final String TAG = "CrearPerfilActivity";
     private TextView mDisplayDate;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
-    private String dateFnac;
+    private String dateFnac="";
+
+    private boolean perfilListo=false;
 
 
     @Override
@@ -65,9 +67,6 @@ public class CrearPerfilActivity extends AppCompatActivity {
         configurarSpinnerEstado();
 
         configurarFnac();
-
-
-
 
     }//onCreate
 
@@ -185,22 +184,45 @@ public class CrearPerfilActivity extends AppCompatActivity {
     public void eventoButtonRegistarPerfil(View view){
 
 
-           registrarPerfilEnBd(); //guarda el perfil del perro en la bd solo la primera vez
+           if(camposCompletos()==true) {
+               registrarPerfilEnBd(); //guarda el perfil del perro en la bd solo la primera vez
 
-           Intent intent = new Intent(this, DispositivosBT.class);
+               Intent intent = new Intent(this, DispositivosBT.class);
 
-            //Aca antes de iniciar la siguiente actividad se codifica la info que se le quiere enviar.
-            Bundle myBundle = prepararInfoAEnviar(etNombre.getText().toString(), etPeso.getText().toString(), razaSeleccionada, NASeleccionado, estadoSeleccionado, dateFnac);
-              //SE GUARDA INFO EN EL INTENT
-            intent.putExtras(myBundle);
+               //Aca antes de iniciar la siguiente actividad se codifica la info que se le quiere enviar.
+               Bundle myBundle = prepararInfoAEnviar(etNombre.getText().toString(), etPeso.getText().toString(), razaSeleccionada, NASeleccionado, estadoSeleccionado, dateFnac);
+               //SE GUARDA INFO EN EL INTENT
+               intent.putExtras(myBundle);
 
-            startActivity(intent); //Una vez que inicia la sig activity, la recepcion de la info la podemos hacer dentro de su metodo onCreate.
+               startActivity(intent); //Una vez que inicia la sig activity, la recepcion de la info la podemos hacer dentro de su metodo onCreate.
+           }else
+               Toast.makeText(getApplicationContext(),"Formulario incompleto.",Toast.LENGTH_LONG).show();
+    }
 
+    private boolean camposCompletos() {
+
+        if(NASeleccionado.equals("Seleccione") || NASeleccionado.equals(""))
+            return false;
+        if(estadoSeleccionado.equals("Seleccione") || estadoSeleccionado.equals(""))
+            return false;
+        if(razaSeleccionada.equals("Seleccione") || razaSeleccionada.equals(""))
+            return false;
+        if(dateFnac.equals(""))
+            return false;
+        if(etNombre.getText().toString().equals(""))
+            return false;
+        if(etPeso.getText().toString().equals(""))
+            return false;
+
+         return true;
     }
 
     public Bundle prepararInfoAEnviar(String name,String peso,String raza,String na,String estado,String fnac){
 
         Bundle myBundle = new Bundle();
+        boolean soyConfigManual =false ;
+
+        myBundle.putBoolean("boolean",soyConfigManual);
         myBundle.putString("nombre",name);
         myBundle.putString("peso",peso);
         myBundle.putString("raza",raza);
@@ -229,10 +251,7 @@ public class CrearPerfilActivity extends AppCompatActivity {
 
         Toast.makeText(getApplicationContext(),"id Registrado; "+idResultante,Toast.LENGTH_SHORT).show();
 
-        // String pathDatabase = getDatabasePath("bd_perros.db").getAbsolutePath();
-        //  Toast.makeText(getApplicationContext(),pathDatabase,Toast.LENGTH_SHORT).show();
         db.close();
 
-        //return idResultante;
     }
 }

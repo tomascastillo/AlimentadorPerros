@@ -23,6 +23,10 @@ public class RutinaFragment extends Fragment {
 
     private ListView listaHorarios;
 
+    private String cadenaRutina="";
+
+
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         rutinaViewModel =
@@ -72,9 +76,22 @@ public class RutinaFragment extends Fragment {
 
 
 
+        //tvRES.setText(cadenaRutina);
+
+
         return root;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(getArguments()!=null) {
+           cadenaRutina = getArguments().getString("rutina", "KHE");
+            tvRES.setText(cadenaRutina);
+        }
+
+    }
     //Este metodo de abajo lo tuve que agregar que RutinaFragment puede recibir info de la MainActivity!!
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

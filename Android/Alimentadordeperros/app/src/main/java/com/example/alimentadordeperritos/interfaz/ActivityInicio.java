@@ -29,11 +29,9 @@ public class ActivityInicio extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //EditText idPerro,nombrePerro;
 
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_inicio);
-            //idPerro= (EditText) findViewById();
 
         ConexionSqlLite con = new ConexionSqlLite(this, "bd_perros", null, 1);
 
@@ -42,12 +40,12 @@ public class ActivityInicio extends AppCompatActivity {
 
     public void cargarPerfilPorDefecto(View view)// evento on click
     {
-        if(cargarPerfil(CODIGO_PERFILxDEFECTO)==TODO_OK){
-        //Toast.makeText(getApplicationContext(),"Perfil por defecto cargado!",Toast.LENGTH_LONG).show();
+        if(cargarPerfil(CODIGO_PERFILxDEFECTO)==TODO_OK)
+        {
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
+
         }else {
-            //Toast.makeText(getApplicationContext(), "Aún no existe un perfil por defecto cargado en bd.", Toast.LENGTH_LONG).show();
             //INTENT TEMPORAL PARA PRUEBAS
             Intent intentTemp = new Intent(this, DispositivosBT.class);
             myBundleCargadoDeBd = new Bundle();
@@ -71,29 +69,30 @@ public class ActivityInicio extends AppCompatActivity {
             Intent intent = new Intent(this, CrearPerfilActivity.class);
             startActivity(intent);
         }
-        //registrarPerfil();
-
-        //Toast.makeText(getApplicationContext(),"Perfil personalizado creado!",Toast.LENGTH_LONG).show();
 
     }
     public void cargarPerfilConfigurado(View view)
     {
-        //Toast.makeText(getApplicationContext(),"Perfil configurado cargado!",Toast.LENGTH_LONG).show();
-try {
-    if (cargarPerfil(CODIGO_MI_PERFIL) == TODO_OK) {
-        Intent intent = new Intent(this, DispositivosBT.class);
-        intent.putExtras(myBundleCargadoDeBd);
-        startActivity(intent);
-    } else
-        Toast.makeText(getApplicationContext(), "Aun no existe un perfil creado.", Toast.LENGTH_LONG).show();
-}catch(Exception e)
-    {
-        Log.e("ErrorBundle...",e.getMessage().toString());
-    }
+        try
+        {
+            if (cargarPerfil(CODIGO_MI_PERFIL) == TODO_OK)
+            {
+                Intent intent = new Intent(this, DispositivosBT.class);
+                intent.putExtras(myBundleCargadoDeBd);
+                startActivity(intent);
+            }
+            else
+                Toast.makeText(getApplicationContext(), "Aun no existe un perfil creado.", Toast.LENGTH_LONG).show();
+        }
+        catch(Exception e)
+        {
+            Log.e("ErrorBundle...",e.getMessage().toString());
+        }
 
 }
 
-    private int cargarPerfil(Integer codigoPerfil) {
+    private int cargarPerfil(Integer codigoPerfil)
+    {
         ConexionSqlLite con = new ConexionSqlLite(this, "bd_perros", null, 1);
         SQLiteDatabase db = con.getReadableDatabase();
         String[] parametros = {codigoPerfil.toString()}; //Variable para guardar el campo por el que se busca. Se busca por el campo id
@@ -121,6 +120,10 @@ try {
     public Bundle prepararInfoAEnviar(String name,String peso,String raza,String na,String estado,String fnac){
 
         Bundle myBundle = new Bundle();
+        boolean ConfigManual = false;
+
+        myBundle.putBoolean("boolean",ConfigManual);
+
         myBundle.putString("nombre",name);
         myBundle.putString("peso",peso);
         myBundle.putString("raza",raza);
@@ -133,8 +136,6 @@ try {
 
     @Override
     public void onBackPressed (){
-       // Toast.makeText(getApplicationContext(),"No se puede ",Toast.LENGTH_LONG).show();
-        //System.exit(0);
 
         finishAndRemoveTask();
 
